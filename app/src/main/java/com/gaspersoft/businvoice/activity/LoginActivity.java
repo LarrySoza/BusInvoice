@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.gaspersoft.businvoice.api.IApiService;
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText txtUsuario;
     private EditText txtPassword;
     private Button btnLogin;
+    private ProgressBar waitControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         txtUsuario = findViewById(R.id.txtUsuario);
         txtPassword = findViewById(R.id.txtPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        waitControl=findViewById(R.id.waitControl);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                     LoginDto login = new LoginDto();
                     login.usuario = txtUsuario.getText().toString();
                     login.clave = txtPassword.getText().toString();
+                    waitControl.setVisibility(View.VISIBLE);
                     CallLogin(login);
                 } else {
                     Toast.makeText(getApplicationContext(), "Corregir validaciones", Toast.LENGTH_SHORT).show();
@@ -116,6 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (Exception ex) {
                     Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+                waitControl.setVisibility(View.GONE);
             }
 
             @Override

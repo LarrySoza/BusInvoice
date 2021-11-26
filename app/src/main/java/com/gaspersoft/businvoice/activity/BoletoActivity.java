@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -59,6 +60,7 @@ public class BoletoActivity extends AppCompatActivity {
     private Button btnConsultarDni;
     private Button btnConsultarRuc;
     private Button btnRegistrarBoleto;
+    private ProgressBar waitControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class BoletoActivity extends AppCompatActivity {
         btnConsultarDni=findViewById(R.id.btnConsultarDni);
         btnConsultarRuc=findViewById(R.id.btnConsultarRuc);
         btnRegistrarBoleto=findViewById(R.id.btnRegistrar);
+        waitControl=findViewById(R.id.waitControl);
 
         optBoleta.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -116,6 +119,7 @@ public class BoletoActivity extends AppCompatActivity {
                     if (txtNumeroDocumento.getText().toString().trim().length() != 8) {
                         txtNumeroDocumento.setError("Dni no valido");
                     } else {
+                        waitControl.setVisibility(View.VISIBLE);
                         ConsultarDni(txtNumeroDocumento.getText().toString().trim());
                     }
                 }
@@ -131,6 +135,7 @@ public class BoletoActivity extends AppCompatActivity {
                     String ruc = txtRuc.getText().toString();
 
                     if (ClsGlobal.isRUCValid(ruc)) {
+                        waitControl.setVisibility(View.VISIBLE);
                         ConsultarRuc(txtRuc.getText().toString().trim());
                     } else {
                         txtRuc.setError("Ruc no valido");
@@ -215,6 +220,7 @@ public class BoletoActivity extends AppCompatActivity {
                     boleto.pasajeroRuc = pasajeroRuc;
                     boleto.pasajeroRazonSocial = pasajeroRazonSocial;
 
+                    waitControl.setVisibility(View.VISIBLE);
                     RegistrarBoletoViaje(boleto);
                 }
             }
@@ -334,6 +340,8 @@ public class BoletoActivity extends AppCompatActivity {
                 } catch (Exception ex) {
                     Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+
+                waitControl.setVisibility(View.GONE);
             }
 
             @Override
@@ -356,6 +364,7 @@ public class BoletoActivity extends AppCompatActivity {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 OrigenDto origen = (OrigenDto) spOrigenes.getSelectedItem();
+                                waitControl.setVisibility(View.VISIBLE);
                                 CargarDestinos(origen.id);
                             }
 
@@ -403,6 +412,8 @@ public class BoletoActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(getApplicationContext(), "Error al Consultar Dni", Toast.LENGTH_SHORT).show();
                 }
+
+                waitControl.setVisibility(View.GONE);
             }
 
             @Override
@@ -424,6 +435,8 @@ public class BoletoActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(getApplicationContext(), "Error al Consultar Ruc", Toast.LENGTH_SHORT).show();
                         }
+
+                        waitControl.setVisibility(View.GONE);
                     }
 
                     @Override
@@ -476,6 +489,8 @@ public class BoletoActivity extends AppCompatActivity {
                 } catch (Exception ex) {
                     Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+
+                waitControl.setVisibility(View.GONE);
             }
 
             @Override

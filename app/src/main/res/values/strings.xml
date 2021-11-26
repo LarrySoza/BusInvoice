@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">BusInvoice</string>
+    <string name="toast_3">El dispositivo Bluetooth no está disponible</string>
+    <string name="toast_4">Dispositivo Bluetooth no detectado. ¡Abra Bluetooth!</string>
+    <string name="toast_5">¡No se encuentra InnterPrinter!</string>
+    <string name="toast_6">¡La conexión Bluetooth falló!</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+</resources>

@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BusInvoice">
         <activity
-            android:name=".MenuActivity"
+            android:name=".activity.MenuActivity"
             android:exported="false" />
         <activity
             android:name=".activity.TipoDocumentoActivity"

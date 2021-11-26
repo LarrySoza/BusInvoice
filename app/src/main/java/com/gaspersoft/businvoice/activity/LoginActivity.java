@@ -39,8 +39,8 @@ public class LoginActivity extends AppCompatActivity {
 
         String tokenStr = preferences.getString("token", "");
         if(!"".equals(tokenStr)) {
-            Intent frmPasajero = new Intent(getApplicationContext(), BoletoActivity.class);
-            startActivity(frmPasajero);
+            Intent frmMenu = new Intent(getApplicationContext(), MenuActivity.class);
+            startActivity(frmMenu);
             finish();
         }
 
@@ -100,10 +100,11 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
                         SharedPreferences.Editor objEditor = preferences.edit();
                         objEditor.putString("token", token.access_token);
+                        objEditor.putString("usuario", login.usuario.toUpperCase());
                         objEditor.commit();
 
-                        Intent frmPasajero = new Intent(getApplicationContext(), BoletoActivity.class);
-                        startActivity(frmPasajero);
+                        Intent frmMenu = new Intent(getApplicationContext(), MenuActivity.class);
+                        startActivity(frmMenu);
                         finish();
                     } else {
                         if (response.code() == 401) {

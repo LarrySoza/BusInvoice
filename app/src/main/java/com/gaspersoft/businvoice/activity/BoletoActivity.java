@@ -332,7 +332,7 @@ public class BoletoActivity extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
                         InfoPasajeDto info = response.body();
-                        //ImprimirCpe(info);
+                        ImprimirCpe(info);
                         Limpiar();
                     } else {
                         Toast.makeText(getApplicationContext(), "Error al registrar pasaje", Toast.LENGTH_SHORT).show();

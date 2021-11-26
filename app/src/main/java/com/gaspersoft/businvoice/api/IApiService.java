@@ -23,7 +23,7 @@ public interface IApiService {
     @POST("/api/token")
     Call<TokenDto> ObtenerToken(@Body LoginDto login);
 
-    @POST("/api/boleto-viaje")
+    @POST("/api/venta-ruta")
     Call<InfoPasajeDto> RegistrarViaje(@Header("Authorization") String token,@Body BoletoViajeDto boleto);
 
     @GET("/api/tipo-documento-identidad")

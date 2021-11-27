@@ -29,6 +29,9 @@ public interface IApiService {
     @GET("/api/tipo-documento-identidad")
     Call<List<TipoDocumentoDto>> ListarTipoDocumentoIdentidad(@Header("Authorization") String token);
 
+    @GET("/api/venta-ruta/top10")
+    Call<List<InfoPasajeDto>> Listar10Ultimos(@Header("Authorization") String token);
+
     @GET("/api/origen")
     Call<List<OrigenDto>> ListarOrigenes(@Header("Authorization") String token);
 

@@ -4,6 +4,10 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class InfoPasajeDto {
+    public String toString() {
+        return cpeNumeroDocumento + "\n" + pasajeroNombre;
+    }
+
     @SerializedName("empresaNombre")
     @Expose
     public String empresaNombre;

@@ -17,6 +17,7 @@ public class MenuActivity extends AppCompatActivity {
     TextView txtLogin;
     Button btnEmitirBoleto;
     Button btnCerrarSesion;
+    Button btnUltimosMovimientos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class MenuActivity extends AppCompatActivity {
         txtLogin = findViewById(R.id.txtLogin);
         btnCerrarSesion = findViewById(R.id.btnCesarSesion);
         btnEmitirBoleto = findViewById(R.id.btnEmitirBoletos);
+        btnUltimosMovimientos=findViewById(R.id.btnUltimosMovimientos);
 
         SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
         String nombreUsuario=preferences.getString("usuario", "");
@@ -59,6 +61,14 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent frmEmitirBoleto = new Intent(getApplicationContext(), BoletoActivity.class);
                 startActivity(frmEmitirBoleto); }
+        });
+
+        btnUltimosMovimientos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent frmUltimosMovimientos = new Intent(getApplicationContext(), UltimosMovimientosActivity.class);
+                startActivity(frmUltimosMovimientos);
+            }
         });
     }
 }

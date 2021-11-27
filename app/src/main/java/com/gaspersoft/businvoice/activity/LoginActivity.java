@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.gaspersoft.businvoice.api.ApiClient;
 import com.gaspersoft.businvoice.api.IApiService;
 import com.gaspersoft.businvoice.ClsGlobal;
 import com.gaspersoft.businvoice.R;
@@ -83,18 +84,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void CallLogin(LoginDto login) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ClsGlobal.getBaseUrl())
-                .addConverterFactory(GsonConverterFactory.create(
-                        new GsonBuilder().serializeNulls().create()
-                ))
-                .build();
-
-        IApiService IApiService = retrofit.create(IApiService.class);
-
-        Call<TokenDto> call = IApiService.ObtenerToken(login);
-
-        call.enqueue(new Callback<TokenDto>() {
+        ApiClient.GetService().ObtenerToken(login)
+            .enqueue(new Callback<TokenDto>() {
             @Override
             public void onResponse(Call<TokenDto> call, Response<TokenDto> response) {
                 try {

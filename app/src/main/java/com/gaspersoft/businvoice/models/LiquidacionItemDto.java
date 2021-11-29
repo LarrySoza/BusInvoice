@@ -8,4 +8,6 @@ public class LiquidacionItemDto {
     public String numeroDocumento;
     public String moneda;
     public Double importe;
+    public int asiento;
+    public String bus;
 }

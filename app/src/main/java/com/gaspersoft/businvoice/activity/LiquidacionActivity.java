@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.gaspersoft.businvoice.models.LiquidacionItemDto;
 import com.gaspersoft.businvoice.utils.PrintHelper;
 import com.gaspersoft.businvoice.utils.*;
 import com.gaspersoft.businvoice.ClsGlobal;
@@ -28,6 +29,10 @@ import com.gaspersoft.businvoice.models.DestinoDto;
 import com.gaspersoft.businvoice.models.LiquidacionDto;
 import com.gaspersoft.businvoice.utils.PrintHelper;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -58,6 +63,12 @@ public class LiquidacionActivity extends AppCompatActivity {
         txtInfoLiquidacion = findViewById(R.id.txtInfoLiquidacion);
         btnImprimir = findViewById(R.id.btnImprimirLiquidacion);
         waitControl = findViewById(R.id.waitControl);
+
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = dateFormat.format(date);
+
+        txtFecha.setText(strDate);
 
         SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
 
@@ -109,8 +120,48 @@ public class LiquidacionActivity extends AppCompatActivity {
         }
 
         if (!BluetoothUtil.isBlueToothPrinter) {
+            PrintHelper.getInstance().initPrinter();
+            //0=Left  1=Center  2=Right
+            PrintHelper.getInstance().setAlign(1);
+            PrintHelper.getInstance().printText("LIQUIDACION" + "\n", 22, true, false);
+            //0=Left  1=Center  2=Right
+            PrintHelper.getInstance().setAlign(0);
+            PrintHelper.getInstance().printText("FECHA: ", 22, true, false);
+            PrintHelper.getInstance().printText(liquidacionDto.fechaStr + "\n", 22, false, false);
+            PrintHelper.getInstance().printText("USUARIO: ", 22, true, false);
+            PrintHelper.getInstance().printText(liquidacionDto.usuario + "\n", 22, false, false);
+            PrintHelper.getInstance().printText("FACTURAS: ", 22, true, false);
+            PrintHelper.getInstance().printText(liquidacionDto.importeTotalFacturas + "\n", 22, false, false);
+            PrintHelper.getInstance().printText("BOLETAS: ", 22, true, false);
+            PrintHelper.getInstance().printText(liquidacionDto.importeTotalBoletas + "\n", 22, false, false);
+            PrintHelper.getInstance().printText("TOTAL VENTA: ", 22, true, false);
+            PrintHelper.getInstance().printText(liquidacionDto.importeTotal + "\n", 22, false, false);
 
+            if(liquidacionDto.facturas.size()>0) {
+                //0=Left  1=Center  2=Right
+                PrintHelper.getInstance().setAlign(1);
+                PrintHelper.getInstance().printText("FACTURAS" + "\n", 22, true, false);
+                for (LiquidacionItemDto i : liquidacionDto.facturas) {
+                    PrintHelper.getInstance().setAlign(0);
+                    PrintHelper.getInstance().printText(i.numeroDocumento + " AS: " + i.asiento + " " + " BU: " + i.bus + " ", 20, false, false);
+                    PrintHelper.getInstance().setAlign(2);
+                    PrintHelper.getInstance().printText(i.moneda + " " + i.importe + "\n", 20, false, false);
+                }
+            }
 
+            if(liquidacionDto.boletas.size()>0) {
+                PrintHelper.getInstance().setAlign(1);
+                PrintHelper.getInstance().printText("BOLETAS" + "\n", 22, true, false);
+                for (LiquidacionItemDto i : liquidacionDto.boletas) {
+                    PrintHelper.getInstance().setAlign(0);
+                    PrintHelper.getInstance().printText(i.numeroDocumento + " AS: " + i.asiento + " " + " BU: " + i.bus + " ", 20, false, false);
+                    PrintHelper.getInstance().setAlign(2);
+                    PrintHelper.getInstance().printText(i.moneda + " " + i.importe + "\n", 20, false, false);
+                }
+            }
+            
+            PrintHelper.getInstance().feedPaper();
+            PrintHelper.getInstance().feedPaper();
         } else {
             Toast.makeText(this, "Error de impresora", Toast.LENGTH_SHORT).show();
         }
@@ -133,7 +184,7 @@ public class LiquidacionActivity extends AppCompatActivity {
                                         "FECHA DOCUMENTOS -> " + liquidacionDto.fechaStr + "\n" +
                                                 "USUARIO -> " + liquidacionDto.usuario + "\n" +
                                                 "FACTURAS -> " + liquidacionDto.importeTotalFacturas + "\n" +
-                                                "BOLETAS -> " + liquidacionDto.importeTotalFacturas + "\n" +
+                                                "BOLETAS -> " + liquidacionDto.importeTotalBoletas + "\n" +
                                                 "---------------------" + "\n" +
                                                 "TOTAL VENTAS -> " + liquidacionDto.importeTotal;
 

@@ -75,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                     login.usuario = txtUsuario.getText().toString();
                     login.clave = txtPassword.getText().toString();
                     waitControl.setVisibility(View.VISIBLE);
+                    btnLogin.setEnabled(false);
                     CallLogin(login);
                 } else {
                     Toast.makeText(getApplicationContext(), "Corregir validaciones", Toast.LENGTH_SHORT).show();
@@ -112,11 +113,14 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 waitControl.setVisibility(View.GONE);
+                btnLogin.setEnabled(true);
             }
 
             @Override
             public void onFailure(Call<TokenDto> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
+                waitControl.setVisibility(View.GONE);
+                btnLogin.setEnabled(true);
             }
         });
     }

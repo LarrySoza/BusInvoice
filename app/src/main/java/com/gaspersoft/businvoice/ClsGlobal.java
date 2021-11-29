@@ -16,7 +16,12 @@ public class ClsGlobal {
     private static int error_level = 3;
 
     public static String getBaseUrl() {
-        return "https://apiviaunoo.gaspersoft.com";
+        //return "https://apiviaunoo.gaspersoft.com";
+        return "https://viaunooapi.gaspersoft.com";
+    }
+
+    public static Integer getEmpresaId() {
+        return 7;
     }
 
     public static boolean isRUCValid(long ruc){

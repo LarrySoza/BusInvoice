@@ -78,7 +78,7 @@ public class UltimosMovimientosActivity extends AppCompatActivity {
     }
 
     private void CargarUltimosMovimientos() {
-        ApiClient.GetService().Listar10Ultimos(GetHeaderToken())
+        ApiClient.GetService().GetLiquidacion(GetHeaderToken())
             .enqueue(new Callback<List<InfoPasajeDto>>() {
                 @Override
                 public void onResponse(Call<List<InfoPasajeDto>> call, Response<List<InfoPasajeDto>> response) {

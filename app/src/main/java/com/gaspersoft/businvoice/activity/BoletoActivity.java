@@ -30,6 +30,11 @@ import com.gaspersoft.businvoice.models.RucDto;
 import com.gaspersoft.businvoice.models.TipoDocumentoDto;
 import com.gaspersoft.businvoice.utils.PrintHelper;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -112,6 +117,7 @@ public class BoletoActivity extends AppCompatActivity {
                         txtNumeroDocumento.setError("Dni no valido");
                     } else {
                         waitControl.setVisibility(View.VISIBLE);
+                        btnConsultarDni.setEnabled(false);
                         ConsultarDni(txtNumeroDocumento.getText().toString().trim());
                     }
                 }
@@ -128,6 +134,7 @@ public class BoletoActivity extends AppCompatActivity {
 
                     if (ClsGlobal.isRUCValid(ruc)) {
                         waitControl.setVisibility(View.VISIBLE);
+                        btnConsultarRuc.setEnabled(false);
                         ConsultarRuc(txtRuc.getText().toString().trim());
                     } else {
                         txtRuc.setError("Ruc no valido");
@@ -211,8 +218,13 @@ public class BoletoActivity extends AppCompatActivity {
                     boleto.cpeTipoDocumentoId = cpeTipoDocumentoId;
                     boleto.pasajeroRuc = pasajeroRuc;
                     boleto.pasajeroRazonSocial = pasajeroRazonSocial;
+                    boleto.empresaId = ClsGlobal.getEmpresaId();
+                    boleto.progitem = destinoDto.progitem;
+                    boleto.programacionId = destinoDto.programacionId;
+                    boleto.asiento = 3;
 
                     waitControl.setVisibility(View.VISIBLE);
+                    btnRegistrarBoleto.setEnabled(false);
                     RegistrarBoletoViaje(boleto);
                 }
             }
@@ -324,7 +336,7 @@ public class BoletoActivity extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
                         InfoPasajeDto info = response.body();
-                        ClsGlobal.ImprimirCpe(getApplicationContext(), info);
+                        //ClsGlobal.ImprimirCpe(getApplicationContext(), info);
                         Limpiar();
                     } else {
                         Toast.makeText(getApplicationContext(), "Error al registrar pasaje", Toast.LENGTH_SHORT).show();
@@ -334,11 +346,14 @@ public class BoletoActivity extends AppCompatActivity {
                 }
 
                 waitControl.setVisibility(View.GONE);
+                btnRegistrarBoleto.setEnabled(true);
             }
 
             @Override
             public void onFailure(Call<InfoPasajeDto> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
+                waitControl.setVisibility(View.GONE);
+                btnRegistrarBoleto.setEnabled(true);
             }
         });
     }
@@ -357,7 +372,11 @@ public class BoletoActivity extends AppCompatActivity {
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 OrigenDto origen = (OrigenDto) spOrigenes.getSelectedItem();
                                 waitControl.setVisibility(View.VISIBLE);
-                                CargarDestinos(origen.id);
+                                Date date = Calendar.getInstance().getTime();
+                                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                String strDate = dateFormat.format(date);
+
+                                CargarDestinos(strDate, origen.id);
                             }
 
                             @Override
@@ -406,91 +425,96 @@ public class BoletoActivity extends AppCompatActivity {
                 }
 
                 waitControl.setVisibility(View.GONE);
+                btnConsultarDni.setEnabled(true);
             }
 
             @Override
             public void onFailure(Call<DniDto> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
+                waitControl.setVisibility(View.GONE);
+                btnConsultarDni.setEnabled(true);
             }
         });
     }
 
     public void ConsultarRuc(String ruc) {
         ApiClient.GetService().GetEmpresa(GetHeaderToken(), ruc)
-                .enqueue(new Callback<RucDto>() {
+            .enqueue(new Callback<RucDto>() {
+                @Override
+                public void onResponse(Call<RucDto> call, Response<RucDto> response) {
+                    if (response.isSuccessful()) {
+                        RucDto ruc = response.body();
+                        txtRazonSocial.setText(ruc.nombre_o_razon_social);
+                        txtRazonSocial.setError(null);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Error al Consultar Ruc", Toast.LENGTH_SHORT).show();
+                    }
+
+                    waitControl.setVisibility(View.GONE);
+                    btnConsultarRuc.setEnabled(true);
+                }
+
+                @Override
+                public void onFailure(Call<RucDto> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
+                    waitControl.setVisibility(View.GONE);
+                    btnConsultarRuc.setEnabled(true);
+                }
+            });
+    }
+
+    public void CargarDestinos(String fecha, String origenId) {
+        ApiClient.GetService().ListarDestinos(GetHeaderToken(), ClsGlobal.getEmpresaId(), fecha, origenId)
+                .enqueue(new Callback<List<DestinoDto>>() {
                     @Override
-                    public void onResponse(Call<RucDto> call, Response<RucDto> response) {
-                        if (response.isSuccessful()) {
-                            RucDto ruc = response.body();
-                            txtRazonSocial.setText(ruc.nombre_o_razon_social);
-                            txtRazonSocial.setError(null);
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Error al Consultar Ruc", Toast.LENGTH_SHORT).show();
+                    public void onResponse(Call<List<DestinoDto>> call, Response<List<DestinoDto>> response) {
+                        try {
+                            if (response.isSuccessful()) {
+                                ArrayAdapter<DestinoDto> adapterDestinos = new ArrayAdapter<DestinoDto>(getApplicationContext(), R.layout.spinner_item, response.body());
+                                spDestinos.setAdapter(adapterDestinos);
+                                spDestinos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                        try {
+                                            DestinoDto destino = (DestinoDto) spDestinos.getSelectedItem();
+                                            txtTarifa.setText(destino.tarifa.toString());
+                                        } catch (Exception ex) {
+                                            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else {
+                                if (response.code() == 401) {
+                                    SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor objEditor = preferences.edit();
+                                    objEditor.putString("token", "");
+                                    objEditor.commit();
+
+                                    Intent frmLogin = new Intent(getApplicationContext(), BoletoActivity.class);
+                                    startActivity(frmLogin);
+                                    finish();
+
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "El servidor devolvio codigo" + response.code(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        } catch (Exception ex) {
+                            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
                         }
 
                         waitControl.setVisibility(View.GONE);
                     }
 
                     @Override
-                    public void onFailure(Call<RucDto> call, Throwable t) {
+                    public void onFailure(Call<List<DestinoDto>> call, Throwable t) {
                         Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
+                        waitControl.setVisibility(View.GONE);
                     }
                 });
     }
-
-    public void CargarDestinos(String origenId) {
-        ApiClient.GetService().ListarDestinos(GetHeaderToken(), origenId)
-                .enqueue(new Callback<List<DestinoDto>>() {
-            @Override
-            public void onResponse(Call<List<DestinoDto>> call, Response<List<DestinoDto>> response) {
-                try {
-                    if (response.isSuccessful()) {
-                        ArrayAdapter<DestinoDto> adapterDestinos = new ArrayAdapter<DestinoDto>(getApplicationContext(), R.layout.spinner_item, response.body());
-                        spDestinos.setAdapter(adapterDestinos);
-                        spDestinos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                try {
-                                    DestinoDto destino = (DestinoDto) spDestinos.getSelectedItem();
-                                    txtTarifa.setText(destino.tarifa.toString());
-                                } catch (Exception ex) {
-                                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-
-                            }
-                        });
-                    } else {
-                        if (response.code() == 401) {
-                            SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor objEditor = preferences.edit();
-                            objEditor.putString("token", "");
-                            objEditor.commit();
-
-                            Intent frmLogin = new Intent(getApplicationContext(), BoletoActivity.class);
-                            startActivity(frmLogin);
-                            finish();
-
-                        } else {
-                            Toast.makeText(getApplicationContext(), "El servidor devolvio codigo" + response.code(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                } catch (Exception ex) {
-                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-
-                waitControl.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onFailure(Call<List<DestinoDto>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-
 }

@@ -39,4 +39,9 @@ public class BoletoViajeDto {
     @SerializedName("pasajeroRazonSocial")
     @Expose
     public String pasajeroRazonSocial;
+
+    public int empresaId;
+    public int progitem;
+    public int programacionId;
+    public int asiento;
 }

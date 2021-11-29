@@ -10,6 +10,7 @@ import com.gaspersoft.businvoice.models.RucDto;
 import com.gaspersoft.businvoice.models.TipoDocumentoDto;
 import com.gaspersoft.businvoice.models.TokenDto;
 
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.http.Body;
@@ -30,13 +31,13 @@ public interface IApiService {
     Call<List<TipoDocumentoDto>> ListarTipoDocumentoIdentidad(@Header("Authorization") String token);
 
     @GET("/api/venta-ruta/top10")
-    Call<List<InfoPasajeDto>> Listar10Ultimos(@Header("Authorization") String token);
+    Call<List<InfoPasajeDto>> GetLiquidacion(@Header("Authorization") String token);
 
     @GET("/api/origen")
     Call<List<OrigenDto>> ListarOrigenes(@Header("Authorization") String token);
 
-    @GET("/api/destino/{origenId}")
-    Call<List<DestinoDto>> ListarDestinos(@Header("Authorization") String token, @Path("origenId") String origenId);
+    @GET("/api/destino/{empresaId}/{fecha}/{origenId}")
+    Call<List<DestinoDto>> ListarDestinos(@Header("Authorization") String token,@Path("empresaId") int empresaId,@Path("fecha") String fecha, @Path("origenId") String origenId);
 
     @GET("/api/ruc/{ruc}")
     Call<RucDto> GetEmpresa(@Header("Authorization") String token, @Path("ruc") String ruc);

@@ -18,6 +18,7 @@ public class MenuActivity extends AppCompatActivity {
     Button btnEmitirBoleto;
     Button btnCerrarSesion;
     Button btnReImprimir;
+    Button btnLiquidacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +28,13 @@ public class MenuActivity extends AppCompatActivity {
         txtLogin = findViewById(R.id.txtLogin);
         btnCerrarSesion = findViewById(R.id.btnCesarSesion);
         btnEmitirBoleto = findViewById(R.id.btnEmitirBoletos);
-        btnReImprimir =findViewById(R.id.btnReImprimir);
+        btnReImprimir = findViewById(R.id.btnReImprimir);
+        btnLiquidacion = findViewById(R.id.btnLiquidacion);
 
         SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
-        String nombreUsuario=preferences.getString("usuario", "");
+        String nombreUsuario = preferences.getString("usuario", "");
 
-        if(!"".equals(nombreUsuario)) {
+        if (!"".equals(nombreUsuario)) {
             txtLogin.setText(nombreUsuario);
         }
 
@@ -62,7 +64,8 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent frmEmitirBoleto = new Intent(getApplicationContext(), BoletoActivity.class);
-                startActivity(frmEmitirBoleto); }
+                startActivity(frmEmitirBoleto);
+            }
         });
 
         btnReImprimir.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +73,14 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent frmUltimosMovimientos = new Intent(getApplicationContext(), VentasBusActivity.class);
                 startActivity(frmUltimosMovimientos);
+            }
+        });
+
+        btnLiquidacion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent frmLiquidacion = new Intent(getApplicationContext(), LiquidacionActivity.class);
+                startActivity(frmLiquidacion);
             }
         });
     }

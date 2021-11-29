@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BusInvoice">
         <activity
+            android:name=".activity.LiquidacionActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.PlanoBusActivity"
             android:exported="false" />
         <activity

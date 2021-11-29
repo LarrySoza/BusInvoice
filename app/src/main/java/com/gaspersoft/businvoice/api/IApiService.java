@@ -4,6 +4,7 @@ import com.gaspersoft.businvoice.models.BoletoViajeDto;
 import com.gaspersoft.businvoice.models.DestinoDto;
 import com.gaspersoft.businvoice.models.DniDto;
 import com.gaspersoft.businvoice.models.InfoPasajeDto;
+import com.gaspersoft.businvoice.models.LiquidacionDto;
 import com.gaspersoft.businvoice.models.LoginDto;
 import com.gaspersoft.businvoice.models.OrigenDto;
 import com.gaspersoft.businvoice.models.RucDto;
@@ -41,6 +42,9 @@ public interface IApiService {
 
     @GET("/api/ruc/{ruc}")
     Call<RucDto> GetEmpresa(@Header("Authorization") String token, @Path("ruc") String ruc);
+
+    @GET("/api/liquidacion/{fecha}")
+    Call<LiquidacionDto> GetLiquidacion(@Header("Authorization") String token, @Path("fecha") String fecha);
 
     @GET("/api/dni/{dni}")
     Call<DniDto> GetPersonaPorDni(@Header("Authorization") String token, @Path("dni") String dni);

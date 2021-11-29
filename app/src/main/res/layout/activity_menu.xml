@@ -7,14 +7,14 @@
     tools:context=".activity.MenuActivity">
 
     <Button
-        android:id="@+id/btnUltimosMovimientos"
+        android:id="@+id/btnReImprimir"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
-        android:text="ULTIMOS MOVIMIENTOS"
-        android:textSize="24sp"
+        android:text="BUSCAR BOLETO (REIMPRIMIR)"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,8 +27,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
-        android:text="EMITIR BOLETO"
-        android:textSize="24sp"
+        android:text="EMITIR BOLETO (VENTA)"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,11 +42,11 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:text="CERRAR SESION"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnUltimosMovimientos" />
+        app:layout_constraintTop_toBottomOf="@+id/btnReImprimir" />
 
     <ImageView
         android:id="@+id/imageView2"

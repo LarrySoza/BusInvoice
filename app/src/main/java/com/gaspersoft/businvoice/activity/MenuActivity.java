@@ -17,7 +17,7 @@ public class MenuActivity extends AppCompatActivity {
     TextView txtLogin;
     Button btnEmitirBoleto;
     Button btnCerrarSesion;
-    Button btnUltimosMovimientos;
+    Button btnReImprimir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class MenuActivity extends AppCompatActivity {
         txtLogin = findViewById(R.id.txtLogin);
         btnCerrarSesion = findViewById(R.id.btnCesarSesion);
         btnEmitirBoleto = findViewById(R.id.btnEmitirBoletos);
-        btnUltimosMovimientos=findViewById(R.id.btnUltimosMovimientos);
+        btnReImprimir =findViewById(R.id.btnReImprimir);
 
         SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
         String nombreUsuario=preferences.getString("usuario", "");
@@ -51,8 +51,10 @@ public class MenuActivity extends AppCompatActivity {
                 SharedPreferences.Editor objEditor = preferences.edit();
                 objEditor.putString("token", "");
                 objEditor.commit();
+
+                Intent frmLogin = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(frmLogin);
                 finish();
-                System.exit(0);
             }
         });
 
@@ -63,10 +65,10 @@ public class MenuActivity extends AppCompatActivity {
                 startActivity(frmEmitirBoleto); }
         });
 
-        btnUltimosMovimientos.setOnClickListener(new View.OnClickListener() {
+        btnReImprimir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent frmUltimosMovimientos = new Intent(getApplicationContext(), UltimosMovimientosActivity.class);
+                Intent frmUltimosMovimientos = new Intent(getApplicationContext(), VentasBusActivity.class);
                 startActivity(frmUltimosMovimientos);
             }
         });

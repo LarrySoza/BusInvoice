@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class InfoPasajeDto {
     public String toString() {
-        return cpeNumeroDocumento + "\n" + pasajeroNombre;
+        return cpeNumeroDocumento + "\n" + pasajeroNombre +"\n" + pasajePuntoOrigen +" -> " + pasajePuntoLlegada +"\n" + cpeSimboloMoneda + " " + cpeImporteTotal;
     }
 
     @SerializedName("empresaNombre")

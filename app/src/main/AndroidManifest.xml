@@ -13,10 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BusInvoice">
         <activity
-            android:name=".PlanoBusActivity"
+            android:name=".activity.PlanoBusActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.UltimosMovimientosActivity"
+            android:name=".activity.VentasBusActivity"
             android:exported="false" />
         <activity
             android:name=".activity.MenuActivity"

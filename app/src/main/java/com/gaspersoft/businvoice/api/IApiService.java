@@ -30,8 +30,8 @@ public interface IApiService {
     @GET("/api/tipo-documento-identidad")
     Call<List<TipoDocumentoDto>> ListarTipoDocumentoIdentidad(@Header("Authorization") String token);
 
-    @GET("/api/venta-ruta/top10")
-    Call<List<InfoPasajeDto>> GetLiquidacion(@Header("Authorization") String token);
+    @GET("/api/venta-ruta/{programacionId}")
+    Call<List<InfoPasajeDto>> GetVentasProgramacion(@Header("Authorization") String token,@Path("programacionId") Integer programacionId);
 
     @GET("/api/origen")
     Call<List<OrigenDto>> ListarOrigenes(@Header("Authorization") String token);

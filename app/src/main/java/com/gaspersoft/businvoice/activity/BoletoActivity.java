@@ -52,6 +52,7 @@ public class BoletoActivity extends AppCompatActivity {
     private EditText txtTarifa;
     private EditText txtRuc;
     private EditText txtRazonSocial;
+    private EditText txtNumeroAsiento;
     private RadioButton optFactura;
     private RadioButton optBoleta;
     private Button btnConsultarDni;
@@ -81,6 +82,7 @@ public class BoletoActivity extends AppCompatActivity {
         btnConsultarRuc=findViewById(R.id.btnConsultarRuc);
         btnRegistrarBoleto=findViewById(R.id.btnRegistrar);
         waitControl=findViewById(R.id.waitControl);
+        txtNumeroAsiento=findViewById(R.id.txtNumeroAsiento);
 
         optBoleta.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -151,6 +153,7 @@ public class BoletoActivity extends AppCompatActivity {
                 txtNombrePasajero.setError(null);
                 txtRuc.setError(null);
                 txtRazonSocial.setError(null);
+                txtNumeroAsiento.setError(null);
 
                 TipoDocumentoDto tipoDocumentoDto = (TipoDocumentoDto) spTipoDocumento.getSelectedItem();
                 String pasajeroNumeroDocumento = txtNumeroDocumento.getText().toString().trim();
@@ -164,6 +167,7 @@ public class BoletoActivity extends AppCompatActivity {
                 OrigenDto origenDto = (OrigenDto) spOrigenes.getSelectedItem();
                 DestinoDto destinoDto = (DestinoDto) spDestinos.getSelectedItem();
                 String cpeImporteTotal = txtTarifa.getText().toString();
+                String asiento = txtNumeroAsiento.getText().toString();
                 String cpeTipoDocumentoId = "03";
                 String pasajeroRuc = "";
                 String pasajeroRazonSocial = "";
@@ -190,6 +194,10 @@ public class BoletoActivity extends AppCompatActivity {
                     }
                 }
 
+                if (asiento.length() == 0) {
+                    txtNumeroAsiento.setError("Ingrese numero de asiento");
+                    validado = false;
+                }
 
                 if (optFactura.isChecked()) {
                     cpeTipoDocumentoId = "01";
@@ -221,7 +229,7 @@ public class BoletoActivity extends AppCompatActivity {
                     boleto.empresaId = ClsGlobal.getEmpresaId();
                     boleto.progitem = destinoDto.progitem;
                     boleto.programacionId = destinoDto.programacionId;
-                    boleto.asiento = 3;
+                    boleto.asiento = Integer.parseInt(asiento);
 
                     waitControl.setVisibility(View.VISIBLE);
                     btnRegistrarBoleto.setEnabled(false);
@@ -259,6 +267,9 @@ public class BoletoActivity extends AppCompatActivity {
 
         spTipoDocumento.setSelection(0);
         txtNumeroDocumento.requestFocus();
+
+        //Asiento libre
+        txtNumeroAsiento.setText("0");
     }
 
     private String GetHeaderToken() {
@@ -335,8 +346,7 @@ public class BoletoActivity extends AppCompatActivity {
             public void onResponse(Call<InfoPasajeDto> call, Response<InfoPasajeDto> response) {
                 try {
                     if (response.isSuccessful()) {
-                        InfoPasajeDto info = response.body();
-                        //ClsGlobal.ImprimirCpe(getApplicationContext(), info);
+                        ClsGlobal.ImprimirCpe(getApplicationContext(), response.body());
                         Limpiar();
                     } else {
                         Toast.makeText(getApplicationContext(), "Error al registrar pasaje", Toast.LENGTH_SHORT).show();

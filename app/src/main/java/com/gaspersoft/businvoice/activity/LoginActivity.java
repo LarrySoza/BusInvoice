@@ -38,20 +38,24 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        txtUsuario = findViewById(R.id.txtUsuario);
+        txtPassword = findViewById(R.id.txtPassword);
+        btnLogin = findViewById(R.id.btnLogin);
+        waitControl=findViewById(R.id.waitControl);
+
         SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
 
         String tokenStr = preferences.getString("token", "");
+        String ultimousuario = preferences.getString("ultimo_usuario", "");
         if(!"".equals(tokenStr)) {
             Intent frmMenu = new Intent(getApplicationContext(), MenuActivity.class);
             startActivity(frmMenu);
             finish();
         }
 
-
-        txtUsuario = findViewById(R.id.txtUsuario);
-        txtPassword = findViewById(R.id.txtPassword);
-        btnLogin = findViewById(R.id.btnLogin);
-        waitControl=findViewById(R.id.waitControl);
+        if(!"".equals(ultimousuario)) {
+            txtUsuario.setText(ultimousuario);
+        }
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (validado) {
                     LoginDto login = new LoginDto();
-                    login.usuario = txtUsuario.getText().toString();
+                    login.usuario = txtUsuario.getText().toString().trim();
                     login.clave = txtPassword.getText().toString();
                     waitControl.setVisibility(View.VISIBLE);
                     btnLogin.setEnabled(false);
@@ -97,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPreferences.Editor objEditor = preferences.edit();
                         objEditor.putString("token", token.access_token);
                         objEditor.putString("usuario", login.usuario.toUpperCase());
+                        objEditor.putString("ultimo_usuario", login.usuario);
                         objEditor.commit();
 
                         Intent frmMenu = new Intent(getApplicationContext(), MenuActivity.class);

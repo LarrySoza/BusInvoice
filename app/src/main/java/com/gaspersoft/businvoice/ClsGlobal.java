@@ -77,6 +77,12 @@ public class ClsGlobal {
     }
 
     public static void ImprimirCpe(Context context, InfoPasajeDto infoPasaje) {
+
+        if(PrintHelper.getInstance().sunmiPrinter==PrintHelper.NoSunmiPrinter) {
+            Toast.makeText(context, "Impresora no disponible", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         if (!BluetoothUtil.isBlueToothPrinter) {
             PrintHelper.getInstance().initPrinter();
             //0=Left  1=Center  2=Right

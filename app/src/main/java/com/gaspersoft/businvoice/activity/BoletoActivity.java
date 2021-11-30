@@ -55,6 +55,7 @@ public class BoletoActivity extends AppCompatActivity {
     private EditText txtNumeroAsiento;
     private RadioButton optFactura;
     private RadioButton optBoleta;
+    private RadioButton optPasaje;
     private Button btnConsultarDni;
     private Button btnConsultarRuc;
     private Button btnRegistrarBoleto;
@@ -78,17 +79,28 @@ public class BoletoActivity extends AppCompatActivity {
         txtRazonSocial = findViewById(R.id.txtRazonSocial);
         optBoleta = findViewById(R.id.optBoleta);
         optFactura = findViewById(R.id.optFactura);
-        btnConsultarDni=findViewById(R.id.btnConsultarDni);
-        btnConsultarRuc=findViewById(R.id.btnConsultarRuc);
-        btnRegistrarBoleto=findViewById(R.id.btnRegistrar);
-        waitControl=findViewById(R.id.waitControl);
-        txtNumeroAsiento=findViewById(R.id.txtNumeroAsiento);
+        optPasaje = findViewById(R.id.optPasaje);
+        btnConsultarDni = findViewById(R.id.btnConsultarDni);
+        btnConsultarRuc = findViewById(R.id.btnConsultarRuc);
+        btnRegistrarBoleto = findViewById(R.id.btnRegistrar);
+        waitControl = findViewById(R.id.waitControl);
+        txtNumeroAsiento = findViewById(R.id.txtNumeroAsiento);
 
         optBoleta.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked)
-                {
+                if (isChecked) {
+                    txtRuc.setEnabled(false);
+                    txtRazonSocial.setEnabled(false);
+                    btnConsultarRuc.setEnabled(false);
+                }
+            }
+        });
+
+        optPasaje.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
                     txtRuc.setEnabled(false);
                     txtRazonSocial.setEnabled(false);
                     btnConsultarRuc.setEnabled(false);
@@ -168,9 +180,10 @@ public class BoletoActivity extends AppCompatActivity {
                 DestinoDto destinoDto = (DestinoDto) spDestinos.getSelectedItem();
                 String cpeImporteTotal = txtTarifa.getText().toString();
                 String asiento = txtNumeroAsiento.getText().toString();
-                String cpeTipoDocumentoId = "03";
+                String cpeTipoDocumentoId = "PA"; //por defecto es pasasajes
                 String pasajeroRuc = "";
                 String pasajeroRazonSocial = "";
+
 
                 if (tipoDocumentoDto.id.equals("1")) {
                     if (pasajeroNumeroDocumento.length() != 8) {
@@ -197,6 +210,11 @@ public class BoletoActivity extends AppCompatActivity {
                 if (asiento.length() == 0) {
                     txtNumeroAsiento.setError("Ingrese numero de asiento");
                     validado = false;
+                }
+
+                if(optBoleta.isChecked())
+                {
+                    cpeTipoDocumentoId = "03";
                 }
 
                 if (optFactura.isChecked()) {
@@ -256,7 +274,7 @@ public class BoletoActivity extends AppCompatActivity {
     private void Limpiar() {
         txtNumeroDocumento.setText("");
         txtNombrePasajero.setText("");
-        optBoleta.setChecked(true);
+        optPasaje.setChecked(true);
         txtRuc.setText("");
         txtRazonSocial.setText("");
         btnConsultarDni.setEnabled(true);

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.gaspersoft.businvoice.BusFragment;
 import com.gaspersoft.businvoice.ClsGlobal;
 import com.gaspersoft.businvoice.R;
 import com.gaspersoft.businvoice.api.ApiClient;
@@ -256,6 +257,18 @@ public class BoletoActivity extends AppCompatActivity {
             }
         });
 
+        txtNumeroAsiento.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    DestinoDto destino = (DestinoDto) spDestinos.getSelectedItem();
+                    showBus(destino.programacionId, destino.progitem);
+                } catch (Exception ex) {
+                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         Limpiar();
 
         SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
@@ -269,6 +282,11 @@ public class BoletoActivity extends AppCompatActivity {
             CargarTiposDocumentos();
             CargarOrigenes();
         }
+    }
+
+    private void showBus(int programacionId, int progitem) {
+        BusFragment bus = new BusFragment();
+        bus.show(this.getSupportFragmentManager(), "bus");
     }
 
     private void Limpiar() {

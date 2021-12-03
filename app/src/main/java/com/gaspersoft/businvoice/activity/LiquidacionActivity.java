@@ -6,11 +6,8 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -21,19 +18,15 @@ import android.widget.Toast;
 import com.gaspersoft.businvoice.models.LiquidacionItemDto;
 import com.gaspersoft.businvoice.utils.PrintHelper;
 import com.gaspersoft.businvoice.utils.*;
-import com.gaspersoft.businvoice.ClsGlobal;
 import com.gaspersoft.businvoice.DatePickerFragment;
 import com.gaspersoft.businvoice.R;
 import com.gaspersoft.businvoice.api.ApiClient;
-import com.gaspersoft.businvoice.models.DestinoDto;
 import com.gaspersoft.businvoice.models.LiquidacionDto;
-import com.gaspersoft.businvoice.utils.PrintHelper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -228,4 +221,5 @@ public class LiquidacionActivity extends AppCompatActivity {
 
         newFragment.show(this.getSupportFragmentManager(), "datePicker");
     }
+
 }

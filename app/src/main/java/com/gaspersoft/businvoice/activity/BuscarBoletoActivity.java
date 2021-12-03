@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.gaspersoft.businvoice.ClsGlobal;
 import com.gaspersoft.businvoice.R;
 import com.gaspersoft.businvoice.api.ApiClient;
-import com.gaspersoft.businvoice.models.DestinoDto;
+import com.gaspersoft.businvoice.models.ProgramacionDto;
 import com.gaspersoft.businvoice.models.InfoPasajeDto;
 import com.gaspersoft.businvoice.models.OrigenDto;
 import com.gaspersoft.businvoice.utils.PrintHelper;
@@ -34,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VentasBusActivity extends AppCompatActivity {
+public class BuscarBoletoActivity extends AppCompatActivity {
 
     private ProgressBar waitControl;
     private Button btnReimprimir;
@@ -49,7 +49,7 @@ public class VentasBusActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ventas_bus);
+        setContentView(R.layout.activity_buscar_boleto);
 
         //Inicializamos el servicio de impresion
         PrintHelper.getInstance().initSunmiPrinterService(this);
@@ -88,10 +88,10 @@ public class VentasBusActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    DestinoDto destino = (DestinoDto) spDestinos.getSelectedItem();
+                    ProgramacionDto programacionDto= (ProgramacionDto) spDestinos.getSelectedItem();
                     waitControl.setVisibility(View.VISIBLE);
                     btnConsultar.setEnabled(false);
-                    GetVentasProgramacion(destino.programacionId);
+                    GetVentasProgramacion(programacionDto.programacionId);
                 } catch (Exception ex) {
                     Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -138,14 +138,14 @@ public class VentasBusActivity extends AppCompatActivity {
                 });
     }
 
-    public void CargarDestinos(String fecha, String origenId) {
-        ApiClient.GetService().ListarDestinos(GetHeaderToken(), ClsGlobal.getEmpresaId(), fecha, origenId)
-                .enqueue(new Callback<List<DestinoDto>>() {
+    public void CargarProgramaciones(String fecha, String origenId) {
+        ApiClient.GetService().ListarProgramaciones(GetHeaderToken(), ClsGlobal.getEmpresaId(), fecha, origenId)
+                .enqueue(new Callback<List<ProgramacionDto>>() {
                     @Override
-                    public void onResponse(Call<List<DestinoDto>> call, Response<List<DestinoDto>> response) {
+                    public void onResponse(Call<List<ProgramacionDto>> call, Response<List<ProgramacionDto>> response) {
                         try {
                             if (response.isSuccessful()) {
-                                ArrayAdapter<DestinoDto> adapterDestinos = new ArrayAdapter<DestinoDto>(getApplicationContext(), R.layout.spinner_item, response.body());
+                                ArrayAdapter<ProgramacionDto> adapterDestinos = new ArrayAdapter<ProgramacionDto>(getApplicationContext(), R.layout.spinner_item, response.body());
                                 spDestinos.setAdapter(adapterDestinos);
                             } else {
                                 if (response.code() == 401) {
@@ -154,7 +154,7 @@ public class VentasBusActivity extends AppCompatActivity {
                                     objEditor.putString("token", "");
                                     objEditor.commit();
 
-                                    Intent frmLogin = new Intent(getApplicationContext(), BoletoActivity.class);
+                                    Intent frmLogin = new Intent(getApplicationContext(), VentaProgramacionActivity.class);
                                     startActivity(frmLogin);
                                     finish();
 
@@ -170,7 +170,7 @@ public class VentasBusActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<List<DestinoDto>> call, Throwable t) {
+                    public void onFailure(Call<List<ProgramacionDto>> call, Throwable t) {
                         Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
                         waitControl.setVisibility(View.GONE);
                     }
@@ -195,7 +195,7 @@ public class VentasBusActivity extends AppCompatActivity {
                                         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                         String strDate = dateFormat.format(date);
 
-                                        CargarDestinos(strDate, origen.id);
+                                        CargarProgramaciones(strDate, origen.id);
                                     }
 
                                     @Override
@@ -210,7 +210,7 @@ public class VentasBusActivity extends AppCompatActivity {
                                     objEditor.putString("token", "");
                                     objEditor.commit();
 
-                                    Intent frmLogin = new Intent(getApplicationContext(), BoletoActivity.class);
+                                    Intent frmLogin = new Intent(getApplicationContext(), VentaProgramacionActivity.class);
                                     startActivity(frmLogin);
                                     finish();
 

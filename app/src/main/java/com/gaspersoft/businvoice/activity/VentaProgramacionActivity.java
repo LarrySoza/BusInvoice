@@ -23,7 +23,8 @@ import com.gaspersoft.businvoice.ClsGlobal;
 import com.gaspersoft.businvoice.R;
 import com.gaspersoft.businvoice.api.ApiClient;
 import com.gaspersoft.businvoice.models.BoletoViajeDto;
-import com.gaspersoft.businvoice.models.DestinoDto;
+import com.gaspersoft.businvoice.models.ErrorDto;
+import com.gaspersoft.businvoice.models.ProgramacionDto;
 import com.gaspersoft.businvoice.models.DniDto;
 import com.gaspersoft.businvoice.models.InfoPasajeDto;
 import com.gaspersoft.businvoice.models.OrigenDto;
@@ -33,7 +34,6 @@ import com.gaspersoft.businvoice.utils.PrintHelper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -42,7 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BoletoActivity extends AppCompatActivity {
+public class VentaProgramacionActivity extends AppCompatActivity {
     private String tokenStr;
 
     private Spinner spTipoDocumento;
@@ -65,7 +65,7 @@ public class BoletoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_boleto);
+        setContentView(R.layout.activity_venta_programacion);
 
         //Inicializamos el servicio de impresion
         PrintHelper.getInstance().initSunmiPrinterService(this);
@@ -178,7 +178,7 @@ public class BoletoActivity extends AppCompatActivity {
                 }
 
                 OrigenDto origenDto = (OrigenDto) spOrigenes.getSelectedItem();
-                DestinoDto destinoDto = (DestinoDto) spDestinos.getSelectedItem();
+                ProgramacionDto programacionDto = (ProgramacionDto) spDestinos.getSelectedItem();
                 String cpeImporteTotal = txtTarifa.getText().toString();
                 String asiento = txtNumeroAsiento.getText().toString();
                 String cpeTipoDocumentoId = "PA"; //por defecto es pasasajes
@@ -240,14 +240,14 @@ public class BoletoActivity extends AppCompatActivity {
                     boleto.pasajeroNumeroDocumento = pasajeroNumeroDocumento;
                     boleto.pasajeroNombre = pasajeroNombre;
                     boleto.origenId = origenDto.id;
-                    boleto.destinoId = destinoDto.id;
+                    boleto.destinoId = programacionDto.id;
                     boleto.cpeImporteTotal = Double.parseDouble(cpeImporteTotal);
                     boleto.cpeTipoDocumentoId = cpeTipoDocumentoId;
                     boleto.pasajeroRuc = pasajeroRuc;
                     boleto.pasajeroRazonSocial = pasajeroRazonSocial;
                     boleto.empresaId = ClsGlobal.getEmpresaId();
-                    boleto.progitem = destinoDto.progitem;
-                    boleto.programacionId = destinoDto.programacionId;
+                    boleto.progitem = programacionDto.progitem;
+                    boleto.programacionId = programacionDto.programacionId;
                     boleto.asiento = Integer.parseInt(asiento);
 
                     waitControl.setVisibility(View.VISIBLE);
@@ -261,8 +261,8 @@ public class BoletoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    DestinoDto destino = (DestinoDto) spDestinos.getSelectedItem();
-                    showBus(destino.programacionId, destino.progitem);
+                    ProgramacionDto programacionDto = (ProgramacionDto) spDestinos.getSelectedItem();
+                    showBus(programacionDto.programacionId, programacionDto.progitem);
                 } catch (Exception ex) {
                     Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -355,7 +355,7 @@ public class BoletoActivity extends AppCompatActivity {
                                     objEditor.putString("token", "");
                                     objEditor.commit();
 
-                                    Intent frmLogin = new Intent(getApplicationContext(), BoletoActivity.class);
+                                    Intent frmLogin = new Intent(getApplicationContext(), VentaProgramacionActivity.class);
                                     startActivity(frmLogin);
                                     finish();
 
@@ -385,7 +385,11 @@ public class BoletoActivity extends AppCompatActivity {
                         ClsGlobal.ImprimirCpe(getApplicationContext(), response.body());
                         Limpiar();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Error al registrar pasaje", Toast.LENGTH_SHORT).show();
+                        if (response.errorBody() != null) {
+                            ErrorDto.ShowErrorDto(getApplicationContext(), response.errorBody().charStream());
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Error al registrar pasaje", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 } catch (Exception ex) {
                     Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
@@ -422,7 +426,7 @@ public class BoletoActivity extends AppCompatActivity {
                                 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                 String strDate = dateFormat.format(date);
 
-                                CargarDestinos(strDate, origen.id);
+                                CargarProgramaciones(strDate, origen.id);
                             }
 
                             @Override
@@ -437,7 +441,7 @@ public class BoletoActivity extends AppCompatActivity {
                             objEditor.putString("token", "");
                             objEditor.commit();
 
-                            Intent frmLogin = new Intent(getApplicationContext(), BoletoActivity.class);
+                            Intent frmLogin = new Intent(getApplicationContext(), VentaProgramacionActivity.class);
                             startActivity(frmLogin);
                             finish();
 
@@ -509,20 +513,20 @@ public class BoletoActivity extends AppCompatActivity {
             });
     }
 
-    public void CargarDestinos(String fecha, String origenId) {
-        ApiClient.GetService().ListarDestinos(GetHeaderToken(), ClsGlobal.getEmpresaId(), fecha, origenId)
-                .enqueue(new Callback<List<DestinoDto>>() {
+    public void CargarProgramaciones(String fecha, String origenId) {
+        ApiClient.GetService().ListarProgramaciones(GetHeaderToken(), ClsGlobal.getEmpresaId(), fecha, origenId)
+                .enqueue(new Callback<List<ProgramacionDto>>() {
                     @Override
-                    public void onResponse(Call<List<DestinoDto>> call, Response<List<DestinoDto>> response) {
+                    public void onResponse(Call<List<ProgramacionDto>> call, Response<List<ProgramacionDto>> response) {
                         try {
                             if (response.isSuccessful()) {
-                                ArrayAdapter<DestinoDto> adapterDestinos = new ArrayAdapter<DestinoDto>(getApplicationContext(), R.layout.spinner_item, response.body());
+                                ArrayAdapter<ProgramacionDto> adapterDestinos = new ArrayAdapter<ProgramacionDto>(getApplicationContext(), R.layout.spinner_item, response.body());
                                 spDestinos.setAdapter(adapterDestinos);
                                 spDestinos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                     @Override
                                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                         try {
-                                            DestinoDto destino = (DestinoDto) spDestinos.getSelectedItem();
+                                            ProgramacionDto destino = (ProgramacionDto) spDestinos.getSelectedItem();
                                             txtTarifa.setText(destino.tarifa.toString());
                                         } catch (Exception ex) {
                                             Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
@@ -541,7 +545,7 @@ public class BoletoActivity extends AppCompatActivity {
                                     objEditor.putString("token", "");
                                     objEditor.commit();
 
-                                    Intent frmLogin = new Intent(getApplicationContext(), BoletoActivity.class);
+                                    Intent frmLogin = new Intent(getApplicationContext(), VentaProgramacionActivity.class);
                                     startActivity(frmLogin);
                                     finish();
 
@@ -557,7 +561,7 @@ public class BoletoActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<List<DestinoDto>> call, Throwable t) {
+                    public void onFailure(Call<List<ProgramacionDto>> call, Throwable t) {
                         Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
                         waitControl.setVisibility(View.GONE);
                     }

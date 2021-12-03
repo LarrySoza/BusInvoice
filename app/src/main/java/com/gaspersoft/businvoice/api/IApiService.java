@@ -2,6 +2,7 @@ package com.gaspersoft.businvoice.api;
 
 import com.gaspersoft.businvoice.models.BoletoViajeDto;
 import com.gaspersoft.businvoice.models.DestinoDto;
+import com.gaspersoft.businvoice.models.ProgramacionDto;
 import com.gaspersoft.businvoice.models.DniDto;
 import com.gaspersoft.businvoice.models.InfoPasajeDto;
 import com.gaspersoft.businvoice.models.LiquidacionDto;
@@ -11,7 +12,6 @@ import com.gaspersoft.businvoice.models.RucDto;
 import com.gaspersoft.businvoice.models.TipoDocumentoDto;
 import com.gaspersoft.businvoice.models.TokenDto;
 
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.http.Body;
@@ -37,8 +37,11 @@ public interface IApiService {
     @GET("/api/origen")
     Call<List<OrigenDto>> ListarOrigenes(@Header("Authorization") String token);
 
-    @GET("/api/destino/{empresaId}/{fecha}/{origenId}")
-    Call<List<DestinoDto>> ListarDestinos(@Header("Authorization") String token,@Path("empresaId") int empresaId,@Path("fecha") String fecha, @Path("origenId") String origenId);
+    @GET("/api/destino/{origenId}")
+    Call<List<DestinoDto>> ListarDestinos(@Header("Authorization") String token, @Path("origenId") String origenId);
+
+    @GET("/api/programacion/{empresaId}/{fecha}/{origenId}")
+    Call<List<ProgramacionDto>> ListarProgramaciones(@Header("Authorization") String token, @Path("empresaId") int empresaId, @Path("fecha") String fecha, @Path("origenId") String origenId);
 
     @GET("/api/ruc/{ruc}")
     Call<RucDto> GetEmpresa(@Header("Authorization") String token, @Path("ruc") String ruc);

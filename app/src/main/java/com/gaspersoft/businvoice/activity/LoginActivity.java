@@ -13,18 +13,13 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.gaspersoft.businvoice.api.ApiClient;
-import com.gaspersoft.businvoice.api.IApiService;
-import com.gaspersoft.businvoice.ClsGlobal;
 import com.gaspersoft.businvoice.R;
 import com.gaspersoft.businvoice.models.LoginDto;
 import com.gaspersoft.businvoice.models.TokenDto;
-import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -129,4 +124,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 }

@@ -15,10 +15,11 @@ import com.gaspersoft.businvoice.R;
 public class MenuActivity extends AppCompatActivity {
 
     TextView txtLogin;
-    Button btnEmitirBoleto;
+    Button btnEmitirBoletosProgramacion;
     Button btnCerrarSesion;
     Button btnReImprimir;
     Button btnLiquidacion;
+    Button btnEmitirBoletosVentaAbierta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +28,10 @@ public class MenuActivity extends AppCompatActivity {
 
         txtLogin = findViewById(R.id.txtLogin);
         btnCerrarSesion = findViewById(R.id.btnCesarSesion);
-        btnEmitirBoleto = findViewById(R.id.btnEmitirBoletos);
+        btnEmitirBoletosProgramacion = findViewById(R.id.btnEmitirBoletosProgramacion);
         btnReImprimir = findViewById(R.id.btnReImprimir);
         btnLiquidacion = findViewById(R.id.btnLiquidacion);
+        btnEmitirBoletosVentaAbierta = findViewById(R.id.btnEmitirBoletosVentaAbierta);
 
         SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
         String nombreUsuario = preferences.getString("usuario", "");
@@ -60,10 +62,18 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        btnEmitirBoleto.setOnClickListener(new View.OnClickListener() {
+        btnEmitirBoletosProgramacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent frmEmitirBoleto = new Intent(getApplicationContext(), BoletoActivity.class);
+                Intent frmEmitirBoleto = new Intent(getApplicationContext(), VentaProgramacionActivity.class);
+                startActivity(frmEmitirBoleto);
+            }
+        });
+
+        btnEmitirBoletosVentaAbierta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent frmEmitirBoleto = new Intent(getApplicationContext(), VentaAbiertaActivity.class);
                 startActivity(frmEmitirBoleto);
             }
         });
@@ -71,7 +81,7 @@ public class MenuActivity extends AppCompatActivity {
         btnReImprimir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent frmUltimosMovimientos = new Intent(getApplicationContext(), VentasBusActivity.class);
+                Intent frmUltimosMovimientos = new Intent(getApplicationContext(), BuscarBoletoActivity.class);
                 startActivity(frmUltimosMovimientos);
             }
         });

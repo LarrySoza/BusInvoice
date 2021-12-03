@@ -42,7 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VentaProgramacionActivity extends AppCompatActivity {
+public class VentaProgramacionActivity extends AppCompatActivity implements BusFragment.OnSeleccionarAsientoListener {
     private String tokenStr;
 
     private Spinner spTipoDocumento;
@@ -566,5 +566,10 @@ public class VentaProgramacionActivity extends AppCompatActivity {
                         waitControl.setVisibility(View.GONE);
                     }
                 });
+    }
+
+    @Override
+    public void OnSeleccionarAsiento(Integer asiento) {
+        txtNumeroAsiento.setText(asiento.toString());
     }
 }

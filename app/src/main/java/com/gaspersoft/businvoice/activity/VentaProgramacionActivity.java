@@ -521,22 +521,6 @@ public class VentaProgramacionActivity extends AppCompatActivity implements Plan
                             if (response.isSuccessful()) {
                                 ArrayAdapter<ProgramacionDto> adapterDestinos = new ArrayAdapter<ProgramacionDto>(getApplicationContext(), R.layout.spinner_item, response.body());
                                 spDestinos.setAdapter(adapterDestinos);
-                                spDestinos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                    @Override
-                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                        try {
-                                            ProgramacionDto destino = (ProgramacionDto) spDestinos.getSelectedItem();
-                                            txtTarifa.setText(destino.tarifa.toString());
-                                        } catch (Exception ex) {
-                                            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onNothingSelected(AdapterView<?> parent) {
-
-                                    }
-                                });
                             } else {
                                 if (response.code() == 401) {
                                     SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
@@ -568,8 +552,9 @@ public class VentaProgramacionActivity extends AppCompatActivity implements Plan
     }
 
     @Override
-    public void OnSeleccionarAsiento(Integer asiento) {
+    public void OnSeleccionarAsiento(Integer asiento,Double tarifa) {
         txtNumeroAsiento.setText(asiento.toString());
+        txtTarifa.setText(tarifa.toString());
         txtNumeroAsiento.setError(null);
     }
 

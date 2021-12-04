@@ -45,7 +45,7 @@ public class PlanoBusDialog extends DialogFragment {
     private View v;
 
     public interface OnSeleccionarAsientoListener {
-        void OnSeleccionarAsiento(Integer asiento);
+        void OnSeleccionarAsiento(Integer asiento, Double tarifa);
 
         void OnErrorPlanoBus(String mensaje);
     }
@@ -131,10 +131,11 @@ public class PlanoBusDialog extends DialogFragment {
                 if (item.GetId().equals(id)) {
                     if (item.tipo == 0) {
                         b.setText(item.asiento.toString());
+                        b.setTag(item);
 
-                        if(item.estado==0) {
+                        if (item.estado == 0) {
                             b.setEnabled(true);
-                        }else {
+                        } else {
                             b.setEnabled(false);
                         }
 
@@ -165,6 +166,7 @@ public class PlanoBusDialog extends DialogFragment {
                 if (item.GetId().equals(id)) {
                     if (item.tipo == 0) {
                         b.setText(item.asiento.toString());
+                        b.setTag(item);
 
                         if(item.estado==0) {
                             b.setEnabled(true);
@@ -305,7 +307,7 @@ public class PlanoBusDialog extends DialogFragment {
         botones.add(v.findViewById(R.id.btn18_4));
         botones.add(v.findViewById(R.id.btn18_5));
 
-        filas=new ArrayList<>();
+        filas = new ArrayList<>();
         filas.add(v.findViewById(R.id.fila1));
         filas.add(v.findViewById(R.id.fila2));
         filas.add(v.findViewById(R.id.fila3));
@@ -334,7 +336,14 @@ public class PlanoBusDialog extends DialogFragment {
                     Button b = (Button) v;
 
                     if (!"".equals(b.getText().toString())) {
-                        mSeleccionarAsientoListener.OnSeleccionarAsiento(Integer.parseInt(b.getText().toString()));
+                        Double tarifa = 0.00;
+
+                        if (b.getTag() != null) {
+                            BusItemDto item = (BusItemDto) b.getTag();
+                            tarifa = item.tarifa;
+                        }
+
+                        mSeleccionarAsientoListener.OnSeleccionarAsiento(Integer.parseInt(b.getText().toString()), tarifa);
                         dismiss();
                     }
                 }

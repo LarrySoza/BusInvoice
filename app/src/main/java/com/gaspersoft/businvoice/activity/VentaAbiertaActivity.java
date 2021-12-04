@@ -18,26 +18,20 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.gaspersoft.businvoice.BusFragment;
+import com.gaspersoft.businvoice.dialogos.PlanoBusDialog;
 import com.gaspersoft.businvoice.ClsGlobal;
 import com.gaspersoft.businvoice.R;
 import com.gaspersoft.businvoice.api.ApiClient;
 import com.gaspersoft.businvoice.models.BoletoViajeDto;
 import com.gaspersoft.businvoice.models.DestinoDto;
 import com.gaspersoft.businvoice.models.ErrorDto;
-import com.gaspersoft.businvoice.models.ProgramacionDto;
 import com.gaspersoft.businvoice.models.DniDto;
 import com.gaspersoft.businvoice.models.InfoPasajeDto;
 import com.gaspersoft.businvoice.models.OrigenDto;
 import com.gaspersoft.businvoice.models.RucDto;
 import com.gaspersoft.businvoice.models.TipoDocumentoDto;
 import com.gaspersoft.businvoice.utils.PrintHelper;
-import com.google.gson.Gson;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -265,11 +259,6 @@ public class VentaAbiertaActivity extends AppCompatActivity {
             CargarTiposDocumentos();
             CargarOrigenes();
         }
-    }
-
-    private void showBus(int programacionId, int progitem) {
-        BusFragment bus = new BusFragment();
-        bus.show(this.getSupportFragmentManager(), "bus");
     }
 
     private void Limpiar() {

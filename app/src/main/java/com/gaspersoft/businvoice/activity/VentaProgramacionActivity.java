@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.gaspersoft.businvoice.BusFragment;
+import com.gaspersoft.businvoice.dialogos.PlanoBusDialog;
 import com.gaspersoft.businvoice.ClsGlobal;
 import com.gaspersoft.businvoice.R;
 import com.gaspersoft.businvoice.api.ApiClient;
@@ -42,7 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VentaProgramacionActivity extends AppCompatActivity implements BusFragment.OnSeleccionarAsientoListener {
+public class VentaProgramacionActivity extends AppCompatActivity implements PlanoBusDialog.OnSeleccionarAsientoListener {
     private String tokenStr;
 
     private Spinner spTipoDocumento;
@@ -213,8 +213,7 @@ public class VentaProgramacionActivity extends AppCompatActivity implements BusF
                     validado = false;
                 }
 
-                if(optBoleta.isChecked())
-                {
+                if (optBoleta.isChecked()) {
                     cpeTipoDocumentoId = "03";
                 }
 
@@ -285,7 +284,7 @@ public class VentaProgramacionActivity extends AppCompatActivity implements BusF
     }
 
     private void showBus(int programacionId, int progitem) {
-        BusFragment bus = new BusFragment();
+        PlanoBusDialog bus = new PlanoBusDialog(tokenStr, programacionId, progitem);
         bus.show(this.getSupportFragmentManager(), "bus");
     }
 
@@ -305,7 +304,7 @@ public class VentaProgramacionActivity extends AppCompatActivity implements BusF
         txtNumeroDocumento.requestFocus();
 
         //Asiento libre
-        txtNumeroAsiento.setText("0");
+        txtNumeroAsiento.setText("");
     }
 
     private String GetHeaderToken() {
@@ -377,140 +376,140 @@ public class VentaProgramacionActivity extends AppCompatActivity implements BusF
 
     public void RegistrarBoletoViaje(BoletoViajeDto boleto) {
         ApiClient.GetService().RegistrarViaje(GetHeaderToken(), boleto)
-            .enqueue(new Callback<InfoPasajeDto>() {
-            @Override
-            public void onResponse(Call<InfoPasajeDto> call, Response<InfoPasajeDto> response) {
-                try {
-                    if (response.isSuccessful()) {
-                        ClsGlobal.ImprimirCpe(getApplicationContext(), response.body());
-                        Limpiar();
-                    } else {
-                        if (response.errorBody() != null) {
-                            ErrorDto.ShowErrorDto(getApplicationContext(), response.errorBody().charStream());
-                        } else {
-                            Toast.makeText(getApplicationContext(), "Error al registrar pasaje", Toast.LENGTH_SHORT).show();
+                .enqueue(new Callback<InfoPasajeDto>() {
+                    @Override
+                    public void onResponse(Call<InfoPasajeDto> call, Response<InfoPasajeDto> response) {
+                        try {
+                            if (response.isSuccessful()) {
+                                ClsGlobal.ImprimirCpe(getApplicationContext(), response.body());
+                                Limpiar();
+                            } else {
+                                if (response.errorBody() != null) {
+                                    ErrorDto.ShowErrorDto(getApplicationContext(), response.errorBody().charStream());
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Error al registrar pasaje", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        } catch (Exception ex) {
+                            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
                         }
+
+                        waitControl.setVisibility(View.GONE);
+                        btnRegistrarBoleto.setEnabled(true);
                     }
-                } catch (Exception ex) {
-                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-                }
 
-                waitControl.setVisibility(View.GONE);
-                btnRegistrarBoleto.setEnabled(true);
-            }
-
-            @Override
-            public void onFailure(Call<InfoPasajeDto> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
-                waitControl.setVisibility(View.GONE);
-                btnRegistrarBoleto.setEnabled(true);
-            }
-        });
+                    @Override
+                    public void onFailure(Call<InfoPasajeDto> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
+                        waitControl.setVisibility(View.GONE);
+                        btnRegistrarBoleto.setEnabled(true);
+                    }
+                });
     }
 
     public void CargarOrigenes() {
         ApiClient.GetService().ListarOrigenes(GetHeaderToken())
                 .enqueue(new Callback<List<OrigenDto>>() {
-            @Override
-            public void onResponse(Call<List<OrigenDto>> call, Response<List<OrigenDto>> response) {
-                try {
-                    if (response.isSuccessful()) {
-                        ArrayAdapter<OrigenDto> adapterOrigenes = new ArrayAdapter<OrigenDto>(getApplicationContext(), R.layout.spinner_item, response.body());
-                        spOrigenes.setAdapter(adapterOrigenes);
-                        spOrigenes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                OrigenDto origen = (OrigenDto) spOrigenes.getSelectedItem();
-                                waitControl.setVisibility(View.VISIBLE);
-                                Date date = Calendar.getInstance().getTime();
-                                DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                String strDate = dateFormat.format(date);
+                    @Override
+                    public void onResponse(Call<List<OrigenDto>> call, Response<List<OrigenDto>> response) {
+                        try {
+                            if (response.isSuccessful()) {
+                                ArrayAdapter<OrigenDto> adapterOrigenes = new ArrayAdapter<OrigenDto>(getApplicationContext(), R.layout.spinner_item, response.body());
+                                spOrigenes.setAdapter(adapterOrigenes);
+                                spOrigenes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                        OrigenDto origen = (OrigenDto) spOrigenes.getSelectedItem();
+                                        waitControl.setVisibility(View.VISIBLE);
+                                        Date date = Calendar.getInstance().getTime();
+                                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                        String strDate = dateFormat.format(date);
 
-                                CargarProgramaciones(strDate, origen.id);
+                                        CargarProgramaciones(strDate, origen.id);
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else {
+                                if (response.code() == 401) {
+                                    SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor objEditor = preferences.edit();
+                                    objEditor.putString("token", "");
+                                    objEditor.commit();
+
+                                    Intent frmLogin = new Intent(getApplicationContext(), VentaProgramacionActivity.class);
+                                    startActivity(frmLogin);
+                                    finish();
+
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "El servidor devolvio codigo" + response.code(), Toast.LENGTH_SHORT).show();
+                                }
                             }
-
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-
-                            }
-                        });
-                    } else {
-                        if (response.code() == 401) {
-                            SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor objEditor = preferences.edit();
-                            objEditor.putString("token", "");
-                            objEditor.commit();
-
-                            Intent frmLogin = new Intent(getApplicationContext(), VentaProgramacionActivity.class);
-                            startActivity(frmLogin);
-                            finish();
-
-                        } else {
-                            Toast.makeText(getApplicationContext(), "El servidor devolvio codigo" + response.code(), Toast.LENGTH_SHORT).show();
+                        } catch (Exception ex) {
+                            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
-                } catch (Exception ex) {
-                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<OrigenDto>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onFailure(Call<List<OrigenDto>> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     public void ConsultarDni(String dni) {
         ApiClient.GetService().GetPersonaPorDni(GetHeaderToken(), dni)
-            .enqueue(new Callback<DniDto>() {
-            @Override
-            public void onResponse(Call<DniDto> call, Response<DniDto> response) {
-                if (response.isSuccessful()) {
-                    DniDto dni = response.body();
-                    txtNombrePasajero.setText(dni.GetNombre());
-                    txtNombrePasajero.setError(null);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Error al Consultar Dni", Toast.LENGTH_SHORT).show();
-                }
+                .enqueue(new Callback<DniDto>() {
+                    @Override
+                    public void onResponse(Call<DniDto> call, Response<DniDto> response) {
+                        if (response.isSuccessful()) {
+                            DniDto dni = response.body();
+                            txtNombrePasajero.setText(dni.GetNombre());
+                            txtNombrePasajero.setError(null);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Error al Consultar Dni", Toast.LENGTH_SHORT).show();
+                        }
 
-                waitControl.setVisibility(View.GONE);
-                btnConsultarDni.setEnabled(true);
-            }
+                        waitControl.setVisibility(View.GONE);
+                        btnConsultarDni.setEnabled(true);
+                    }
 
-            @Override
-            public void onFailure(Call<DniDto> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
-                waitControl.setVisibility(View.GONE);
-                btnConsultarDni.setEnabled(true);
-            }
-        });
+                    @Override
+                    public void onFailure(Call<DniDto> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
+                        waitControl.setVisibility(View.GONE);
+                        btnConsultarDni.setEnabled(true);
+                    }
+                });
     }
 
     public void ConsultarRuc(String ruc) {
         ApiClient.GetService().GetEmpresa(GetHeaderToken(), ruc)
-            .enqueue(new Callback<RucDto>() {
-                @Override
-                public void onResponse(Call<RucDto> call, Response<RucDto> response) {
-                    if (response.isSuccessful()) {
-                        RucDto ruc = response.body();
-                        txtRazonSocial.setText(ruc.nombre_o_razon_social);
-                        txtRazonSocial.setError(null);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Error al Consultar Ruc", Toast.LENGTH_SHORT).show();
+                .enqueue(new Callback<RucDto>() {
+                    @Override
+                    public void onResponse(Call<RucDto> call, Response<RucDto> response) {
+                        if (response.isSuccessful()) {
+                            RucDto ruc = response.body();
+                            txtRazonSocial.setText(ruc.nombre_o_razon_social);
+                            txtRazonSocial.setError(null);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Error al Consultar Ruc", Toast.LENGTH_SHORT).show();
+                        }
+
+                        waitControl.setVisibility(View.GONE);
+                        btnConsultarRuc.setEnabled(true);
                     }
 
-                    waitControl.setVisibility(View.GONE);
-                    btnConsultarRuc.setEnabled(true);
-                }
-
-                @Override
-                public void onFailure(Call<RucDto> call, Throwable t) {
-                    Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
-                    waitControl.setVisibility(View.GONE);
-                    btnConsultarRuc.setEnabled(true);
-                }
-            });
+                    @Override
+                    public void onFailure(Call<RucDto> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
+                        waitControl.setVisibility(View.GONE);
+                        btnConsultarRuc.setEnabled(true);
+                    }
+                });
     }
 
     public void CargarProgramaciones(String fecha, String origenId) {
@@ -571,5 +570,11 @@ public class VentaProgramacionActivity extends AppCompatActivity implements BusF
     @Override
     public void OnSeleccionarAsiento(Integer asiento) {
         txtNumeroAsiento.setText(asiento.toString());
+        txtNumeroAsiento.setError(null);
+    }
+
+    @Override
+    public void OnErrorPlanoBus(String mensaje) {
+        Toast.makeText(getApplicationContext(), mensaje, Toast.LENGTH_SHORT).show();
     }
 }

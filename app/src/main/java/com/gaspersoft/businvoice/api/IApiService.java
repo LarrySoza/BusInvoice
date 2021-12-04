@@ -1,6 +1,7 @@
 package com.gaspersoft.businvoice.api;
 
 import com.gaspersoft.businvoice.models.BoletoViajeDto;
+import com.gaspersoft.businvoice.models.BusDto;
 import com.gaspersoft.businvoice.models.DestinoDto;
 import com.gaspersoft.businvoice.models.ProgramacionDto;
 import com.gaspersoft.businvoice.models.DniDto;
@@ -39,6 +40,9 @@ public interface IApiService {
 
     @GET("/api/destino/{origenId}")
     Call<List<DestinoDto>> ListarDestinos(@Header("Authorization") String token, @Path("origenId") String origenId);
+
+    @GET("/api/bus/{programacionId}/{item}")
+    Call<BusDto> GetMapaBus(@Header("Authorization") String token, @Path("programacionId") Integer programacionId, @Path("item") Integer item);
 
     @GET("/api/programacion/{empresaId}/{fecha}/{origenId}")
     Call<List<ProgramacionDto>> ListarProgramaciones(@Header("Authorization") String token, @Path("empresaId") int empresaId, @Path("fecha") String fecha, @Path("origenId") String origenId);

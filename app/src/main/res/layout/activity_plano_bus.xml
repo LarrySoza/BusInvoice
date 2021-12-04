@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activity.PlanoBusActivity">
+    android:layout_height="wrap_content">
 
     <ScrollView
         android:id="@+id/scrollBus"
@@ -15,7 +14,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableRow">
+        app:layout_constraintTop_toBottomOf="@+id/btnsPisos">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,18 +23,19 @@
 
             <TableRow
                 android:id="@+id/fila1"
+                android:tag="fila1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/btn1_1"
+                    android:id="@+id/btn1_5"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:text="1" />
 
                 <Button
-                    android:id="@+id/btn1_2"
+                    android:id="@+id/btn1_4"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
@@ -49,14 +49,14 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/btn1_4"
+                    android:id="@+id/btn1_2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:text="3" />
 
                 <Button
-                    android:id="@+id/btn1_5"
+                    android:id="@+id/btn1_1"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
@@ -65,18 +65,19 @@
 
             <TableRow
                 android:id="@+id/fila2"
+                android:tag="fila2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/btn2_1"
+                    android:id="@+id/btn2_5"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:text="5" />
 
                 <Button
-                    android:id="@+id/btn2_2"
+                    android:id="@+id/btn2_4"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
@@ -90,14 +91,14 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/btn2_4"
+                    android:id="@+id/btn2_2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:text="7" />
 
                 <Button
-                    android:id="@+id/btn2_5"
+                    android:id="@+id/btn2_1"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
@@ -106,18 +107,19 @@
 
             <TableRow
                 android:id="@+id/fila3"
+                android:tag="fila3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/btn3_1"
+                    android:id="@+id/btn3_5"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:text="9" />
 
                 <Button
-                    android:id="@+id/btn3_2"
+                    android:id="@+id/btn3_4"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
@@ -131,14 +133,14 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/btn3_4"
+                    android:id="@+id/btn3_2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:text="11" />
 
                 <Button
-                    android:id="@+id/btn3_5"
+                    android:id="@+id/btn3_1"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
@@ -147,18 +149,19 @@
 
             <TableRow
                 android:id="@+id/fila4"
+                android:tag="fila4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/btn4_1"
+                    android:id="@+id/btn4_5"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:text="13" />
 
                 <Button
-                    android:id="@+id/btn4_2"
+                    android:id="@+id/btn4_4"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
@@ -172,14 +175,14 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/btn4_4"
+                    android:id="@+id/btn4_2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:text="15" />
 
                 <Button
-                    android:id="@+id/btn4_5"
+                    android:id="@+id/btn4_1"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
@@ -188,18 +191,19 @@
 
             <TableRow
                 android:id="@+id/fila5"
+                android:tag="fila5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/btn5_1"
+                    android:id="@+id/btn5_5"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:text="17" />
 
                 <Button
-                    android:id="@+id/btn5_2"
+                    android:id="@+id/btn5_4"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
@@ -213,14 +217,14 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/btn5_4"
+                    android:id="@+id/btn5_2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:text="19" />
 
                 <Button
-                    android:id="@+id/btn5_5"
+                    android:id="@+id/btn5_1"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
@@ -229,18 +233,19 @@
 
             <TableRow
                 android:id="@+id/fila6"
+                android:tag="fila6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/btn6_1"
+                    android:id="@+id/btn6_5"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:text="21" />
 
                 <Button
-                    android:id="@+id/btn6_2"
+                    android:id="@+id/btn6_4"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
@@ -254,14 +259,14 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/btn6_4"
+                    android:id="@+id/btn6_2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:text="23" />
 
                 <Button
-                    android:id="@+id/btn6_5"
+                    android:id="@+id/btn6_1"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
@@ -270,18 +275,19 @@
 
             <TableRow
                 android:id="@+id/fila7"
+                android:tag="fila7"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/btn7_1"
+                    android:id="@+id/btn7_5"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:text="25" />
 
                 <Button
-                    android:id="@+id/btn7_2"
+                    android:id="@+id/btn7_4"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
@@ -295,14 +301,14 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/btn7_4"
+                    android:id="@+id/btn7_2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:text="27" />
 
                 <Button
-                    android:id="@+id/btn7_5"
+                    android:id="@+id/btn7_1"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
@@ -311,18 +317,19 @@
 
             <TableRow
                 android:id="@+id/fila8"
+                android:tag="fila8"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/btn8_1"
+                    android:id="@+id/btn8_5"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:text="29" />
 
                 <Button
-                    android:id="@+id/btn8_2"
+                    android:id="@+id/btn8_4"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
@@ -336,14 +343,14 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/btn8_4"
+                    android:id="@+id/btn8_2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:text="31" />
 
                 <Button
-                    android:id="@+id/btn8_5"
+                    android:id="@+id/btn8_1"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
@@ -352,18 +359,19 @@
 
             <TableRow
                 android:id="@+id/fila9"
+                android:tag="fila9"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/btn9_1"
+                    android:id="@+id/btn9_5"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:text="33" />
 
                 <Button
-                    android:id="@+id/btn9_2"
+                    android:id="@+id/btn9_4"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
@@ -377,14 +385,14 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/btn9_4"
+                    android:id="@+id/btn9_2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:text="35" />
 
                 <Button
-                    android:id="@+id/btn9_5"
+                    android:id="@+id/btn9_1"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
@@ -393,18 +401,19 @@
 
             <TableRow
                 android:id="@+id/fila10"
+                android:tag="fila10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <Button
-                    android:id="@+id/btn10_1"
+                    android:id="@+id/btn10_5"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:text="37" />
 
                 <Button
-                    android:id="@+id/btn10_2"
+                    android:id="@+id/btn10_4"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
@@ -418,14 +427,14 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/btn10_4"
+                    android:id="@+id/btn10_2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:text="39" />
 
                 <Button
-                    android:id="@+id/btn10_5"
+                    android:id="@+id/btn10_1"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
@@ -434,18 +443,19 @@
 
             <TableRow
                 android:id="@+id/fila11"
+                android:tag="fila11"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/btn11_1"
+                    android:id="@+id/btn11_5"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:text="41" />
 
                 <Button
-                    android:id="@+id/btn11_2"
+                    android:id="@+id/btn11_4"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
@@ -459,14 +469,14 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/btn11_4"
+                    android:id="@+id/btn11_2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:text="43" />
 
                 <Button
-                    android:id="@+id/btn11_5"
+                    android:id="@+id/btn11_1"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
@@ -475,18 +485,19 @@
 
             <TableRow
                 android:id="@+id/fila12"
+                android:tag="fila12"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/btn12_1"
+                    android:id="@+id/btn12_5"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:text="45" />
 
                 <Button
-                    android:id="@+id/btn12_2"
+                    android:id="@+id/btn12_4"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
@@ -500,14 +511,14 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/btn12_4"
+                    android:id="@+id/btn12_2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:text="47" />
 
                 <Button
-                    android:id="@+id/btn12_5"
+                    android:id="@+id/btn12_1"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
@@ -516,18 +527,19 @@
 
             <TableRow
                 android:id="@+id/fila13"
+                android:tag="fila13"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/btn13_1"
+                    android:id="@+id/btn13_5"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:text="49" />
 
                 <Button
-                    android:id="@+id/btn13_2"
+                    android:id="@+id/btn13_4"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
@@ -541,14 +553,14 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/btn13_4"
+                    android:id="@+id/btn13_2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:text="51" />
 
                 <Button
-                    android:id="@+id/btn13_5"
+                    android:id="@+id/btn13_1"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
@@ -557,18 +569,19 @@
 
             <TableRow
                 android:id="@+id/fila14"
+                android:tag="fila14"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/btn14_1"
+                    android:id="@+id/btn14_5"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
                     android:text="53" />
 
                 <Button
-                    android:id="@+id/btn14_2"
+                    android:id="@+id/btn14_4"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginLeft="4dp"
@@ -582,47 +595,237 @@
                     android:visibility="invisible" />
 
                 <Button
-                    android:id="@+id/btn14_4"
+                    android:id="@+id/btn14_2"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:text="55" />
 
                 <Button
-                    android:id="@+id/btn14_5"
+                    android:id="@+id/btn14_1"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginRight="4dp"
                     android:text="56" />
             </TableRow>
+
+            <TableRow
+                android:id="@+id/fila15"
+                android:tag="fila15"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/btn15_5"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="57" />
+
+                <Button
+                    android:id="@+id/btn15_4"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="58" />
+
+                <Button
+                    android:id="@+id/btn15_3"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:text=""
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/btn15_2"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="4dp"
+                    android:text="59" />
+
+                <Button
+                    android:id="@+id/btn15_1"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="4dp"
+                    android:text="60" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/fila16"
+                android:tag="fila16"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/btn16_5"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="61" />
+
+                <Button
+                    android:id="@+id/btn16_4"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="62" />
+
+                <Button
+                    android:id="@+id/btn16_3"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:text=""
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/btn16_2"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="4dp"
+                    android:text="63" />
+
+                <Button
+                    android:id="@+id/btn16_1"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="4dp"
+                    android:text="64" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/fila17"
+                android:tag="fila17"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/btn17_5"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="65" />
+
+                <Button
+                    android:id="@+id/btn17_4"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="66" />
+
+                <Button
+                    android:id="@+id/btn17_3"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:text=""
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/btn17_2"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="4dp"
+                    android:text="67" />
+
+                <Button
+                    android:id="@+id/btn17_1"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="4dp"
+                    android:text="68" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/fila18"
+                android:tag="fila18"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/btn18_5"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="69" />
+
+                <Button
+                    android:id="@+id/btn18_4"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="4dp"
+                    android:text="70" />
+
+                <Button
+                    android:id="@+id/btn18_3"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:text=""
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/btn18_2"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="4dp"
+                    android:text="71" />
+
+                <Button
+                    android:id="@+id/btn18_1"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="4dp"
+                    android:text="72" />
+            </TableRow>
+
         </LinearLayout>
     </ScrollView>
 
     <TableRow
-        android:id="@+id/tableRow"
+        android:id="@+id/btnsPisos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/txtInfoBus">
 
         <Button
             android:id="@+id/btnPrimerPiso"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="2dp"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="2dp"
             android:text="PRIMER PISO" />
 
         <Button
             android:id="@+id/btnSegundoPiso"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="4dp"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="4dp"
             android:text="SEGUNDO PISO" />
 
     </TableRow>
+
+    <TextView
+        android:id="@+id/txtInfoBus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/waitControl"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

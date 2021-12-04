@@ -157,6 +157,28 @@ public class PlanoBusDialog extends DialogFragment {
             }
             i++;
         }
+
+        for (Button b : botones) {
+            String id = v.getResources().getResourceEntryName(b.getId());
+
+            for (BusItemDto item : bus.itemsSegundoPiso) {
+                if (item.GetId().equals(id)) {
+                    if (item.tipo == 0) {
+                        b.setText(item.asiento.toString());
+
+                        if(item.estado==0) {
+                            b.setEnabled(true);
+                        }else {
+                            b.setEnabled(false);
+                        }
+
+                        b.setVisibility(View.VISIBLE);
+                    } else {
+                        b.setVisibility(View.INVISIBLE);
+                    }
+                }
+            }
+        }
     }
 
     private void MakeBus() {
@@ -167,7 +189,7 @@ public class PlanoBusDialog extends DialogFragment {
                         if (response.isSuccessful()) {
                             bus = response.body();
                             txtInfoBus.setText("BUS: " + bus.codigo + "/" + bus.placa);
-                            if(bus.totalPisos>2) {
+                            if(bus.totalPisos > 1) {
                                 pisos.setVisibility(View.VISIBLE);
                                 btnPrimerPiso.setEnabled(false);
                                 btnSegundoPiso.setEnabled(true);

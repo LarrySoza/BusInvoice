@@ -41,6 +41,6 @@ public class ProgramacionDto {
     public int progitem;
 
     public String toString() {
-        return nombre_origen + "-" + nombre_destino + " -> " + horaStr;
+        return bus + "-" + nombre_origen + "-" + nombre_destino + " -> " + horaStr;
     }
 }

@@ -12,6 +12,7 @@ import com.gaspersoft.businvoice.models.OrigenDto;
 import com.gaspersoft.businvoice.models.RucDto;
 import com.gaspersoft.businvoice.models.TipoDocumentoDto;
 import com.gaspersoft.businvoice.models.TokenDto;
+import com.gaspersoft.businvoice.models.UsuarioDto;
 
 import java.util.List;
 
@@ -44,6 +45,9 @@ public interface IApiService {
     @GET("/api/bus/{programacionId}/{item}")
     Call<BusDto> GetMapaBus(@Header("Authorization") String token, @Path("programacionId") Integer programacionId, @Path("item") Integer item);
 
+    @GET("/api/usuario")
+    Call<List<UsuarioDto>> GetUsuarios(@Header("Authorization") String token);
+
     @GET("/api/programacion/{empresaId}/{fecha}/{origenId}")
     Call<List<ProgramacionDto>> ListarProgramaciones(@Header("Authorization") String token, @Path("empresaId") int empresaId, @Path("fecha") String fecha, @Path("origenId") String origenId);
 
@@ -52,6 +56,9 @@ public interface IApiService {
 
     @GET("/api/liquidacion/{fecha}")
     Call<LiquidacionDto> GetLiquidacion(@Header("Authorization") String token, @Path("fecha") String fecha);
+
+    @GET("/api/liquidacion/{fecha}/{usuario}")
+    Call<LiquidacionDto> GetLiquidacion(@Header("Authorization") String token, @Path("fecha") String fecha,@Path("usuario") String usuario);
 
     @GET("/api/dni/{dni}")
     Call<DniDto> GetPersonaPorDni(@Header("Authorization") String token, @Path("dni") String dni);

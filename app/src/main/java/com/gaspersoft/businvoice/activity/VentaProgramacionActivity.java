@@ -70,7 +70,7 @@ public class VentaProgramacionActivity extends AppCompatActivity implements Plan
         //Inicializamos el servicio de impresion
         PrintHelper.getInstance().initSunmiPrinterService(this);
 
-        spTipoDocumento = findViewById(R.id.spTipoDocumento);
+        spTipoDocumento = findViewById(R.id.spUsuarios);
         txtNumeroDocumento = findViewById(R.id.txtNumeroDocumento);
         txtNombrePasajero = findViewById(R.id.txtNombrePasajero);
         spOrigenes = findViewById(R.id.spOrigen);
@@ -284,8 +284,10 @@ public class VentaProgramacionActivity extends AppCompatActivity implements Plan
     }
 
     private void showBus(int programacionId, int progitem) {
+        waitControl.setVisibility(View.VISIBLE);
         PlanoBusDialog bus = new PlanoBusDialog(tokenStr, programacionId, progitem);
         bus.show(this.getSupportFragmentManager(), "bus");
+        waitControl.setVisibility(View.GONE);
     }
 
     private void Limpiar() {

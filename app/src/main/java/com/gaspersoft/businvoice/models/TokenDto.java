@@ -7,4 +7,8 @@ public class TokenDto {
     @SerializedName("access_token")
     @Expose
     public String access_token;
+
+    @SerializedName("tipo_usuario")
+    @Expose
+    public String tipo_usuario;
 }

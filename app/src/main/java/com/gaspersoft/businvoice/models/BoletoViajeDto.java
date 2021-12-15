@@ -44,4 +44,7 @@ public class BoletoViajeDto {
     public int progitem;
     public int programacionId;
     public int asiento;
+
+    public String excesoDescripcion ;
+    public Double excesoImporteTotal;
 }

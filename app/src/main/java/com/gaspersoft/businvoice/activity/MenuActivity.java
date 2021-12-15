@@ -14,12 +14,13 @@ import com.gaspersoft.businvoice.R;
 
 public class MenuActivity extends AppCompatActivity {
 
-    TextView txtLogin;
-    Button btnEmitirBoletosProgramacion;
-    Button btnCerrarSesion;
-    Button btnReImprimir;
-    Button btnLiquidacion;
-    Button btnEmitirBoletosVentaAbierta;
+    private TextView txtLogin;
+    private Button btnEmitirBoletosProgramacion;
+    private Button btnCerrarSesion;
+    private Button btnReImprimir;
+    private Button btnLiquidacion;
+    private Button btnEmitirBoletosVentaAbierta;
+    private String tipoUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class MenuActivity extends AppCompatActivity {
 
         SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
         String nombreUsuario = preferences.getString("usuario", "");
+        tipoUsuario = preferences.getString("tipo_usuario","");
 
         if (!"".equals(nombreUsuario)) {
             txtLogin.setText(nombreUsuario);
@@ -89,8 +91,13 @@ public class MenuActivity extends AppCompatActivity {
         btnLiquidacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent frmLiquidacion = new Intent(getApplicationContext(), LiquidacionActivity.class);
-                startActivity(frmLiquidacion);
+                if (tipoUsuario.equals("ADMIN")) {
+                    Intent frmLiquidacionAdmin = new Intent(getApplicationContext(), LiquidacionAdminActivity.class);
+                    startActivity(frmLiquidacionAdmin);
+                } else{
+                    Intent frmLiquidacion = new Intent(getApplicationContext(), LiquidacionActivity.class);
+                    startActivity(frmLiquidacion);
+                }
             }
         });
     }

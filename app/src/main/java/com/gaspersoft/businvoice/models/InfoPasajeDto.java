@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class InfoPasajeDto {
     public String toString() {
-        return cpeNumeroDocumento + "\n" + pasajeroNombre +"\n" + pasajePuntoOrigen +" -> " + pasajePuntoLlegada +"\n" + cpeSimboloMoneda + " " + cpeImporteTotal;
+        return cpeNumeroDocumento + "\n" + pasajeroNombre + "\n" + pasajePuntoOrigen + " -> " + pasajePuntoLlegada + "\n" + cpeSimboloMoneda + " " + cpeImporteTotal;
     }
 
     @SerializedName("empresaNombre")
@@ -123,4 +123,23 @@ public class InfoPasajeDto {
     @SerializedName("pasajeNumeroAsiento")
     @Expose
     public String pasajeNumeroAsiento;
+
+
+    public String cpeExcesoTipoDocumentoId;
+    public String cpeExcesoNombreDocumento;
+    public String cpeExcesoNumeroDocumento;
+    public String cpeExcesoFechaEmision;
+    public String cpeExcesoTotalOperacionesGravadas;
+    public String cpeExcesoTotalOperacionesExoneradas;
+    public String cpeExcesoTotalOperacionesInafectas;
+    public String cpExcesoeTasaIgv;
+    public String cpeExcesoSumatoriaIgv;
+    public String cpeExcesoDescripcionServicio;
+    public String cpeExcesoImporteServicio;
+    public String cpeExcesoImporteTotal;
+    public String cpeExcesoFormaPago;
+    public String cpeExcesoSimboloMoneda;
+    public String cpeExcesoUrlConsulta;
+    public String cpeExcesoResumenQr;
+    public String cpeExcesoDescripcion;
 }

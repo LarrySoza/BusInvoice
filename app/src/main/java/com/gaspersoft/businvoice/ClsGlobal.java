@@ -16,8 +16,7 @@ public class ClsGlobal {
     private static int error_level = 3;
 
     public static String getBaseUrl() {
-        //return "https://apiviaunoo.gaspersoft.com";
-        return "https://viaunooapi.gaspersoft.com";
+        return "https://viaunooapiv2.gaspersoft.com";
     }
 
     public static Integer getEmpresaId() {

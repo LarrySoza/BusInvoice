@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.gaspersoft.businvoice.dialogos.PlanoBusDialog;
 import com.gaspersoft.businvoice.ClsGlobal;
 import com.gaspersoft.businvoice.R;
 import com.gaspersoft.businvoice.api.ApiClient;
@@ -66,7 +65,7 @@ public class VentaAbiertaActivity extends AppCompatActivity {
         //Inicializamos el servicio de impresion
         PrintHelper.getInstance().initSunmiPrinterService(this);
 
-        spTipoDocumento = findViewById(R.id.spTipoDocumento);
+        spTipoDocumento = findViewById(R.id.spUsuarios);
         txtNumeroDocumento = findViewById(R.id.txtNumeroDocumento);
         txtNombrePasajero = findViewById(R.id.txtNombrePasajero);
         spOrigenes = findViewById(R.id.spOrigen);

@@ -140,7 +140,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtRazonSocial" />
 
     <Spinner
-        android:id="@+id/spTipoDocumento"
+        android:id="@+id/spUsuarios"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -164,7 +164,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/btnConsultarDni"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spTipoDocumento" />
+        app:layout_constraintTop_toBottomOf="@+id/spUsuarios" />
 
     <EditText
         android:id="@+id/txtNombrePasajero"
@@ -193,7 +193,7 @@
         app:layout_constraintBottom_toTopOf="@+id/txtNombrePasajero"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txtNumeroDocumento"
-        app:layout_constraintTop_toBottomOf="@+id/spTipoDocumento" />
+        app:layout_constraintTop_toBottomOf="@+id/spUsuarios" />
 
     <ProgressBar
         android:id="@+id/waitControl"

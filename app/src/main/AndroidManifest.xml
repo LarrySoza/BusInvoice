@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gaspersoft.businvoice" >
+    package="com.gaspersoft.businvoice">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,15 +11,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BusInvoice" >
+        android:theme="@style/Theme.BusInvoice">
+        <activity
+            android:name=".activity.LiquidacionAdminActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.VentaAbiertaActivity"
             android:exported="false" />
         <activity
             android:name=".activity.LiquidacionActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.PlanoBusActivity"
             android:exported="false" />
         <activity
             android:name=".activity.BuscarBoletoActivity"
@@ -28,14 +28,11 @@
             android:name=".activity.MenuActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.TipoDocumentoActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.VentaProgramacionActivity"
             android:exported="false" />
         <activity
             android:name=".activity.LoginActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

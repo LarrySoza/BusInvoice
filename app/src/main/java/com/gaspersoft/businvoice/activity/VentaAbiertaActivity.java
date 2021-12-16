@@ -65,7 +65,7 @@ public class VentaAbiertaActivity extends AppCompatActivity {
         //Inicializamos el servicio de impresion
         PrintHelper.getInstance().initSunmiPrinterService(this);
 
-        spTipoDocumento = findViewById(R.id.spUsuarios);
+        spTipoDocumento = findViewById(R.id.spTipoDocumentoPasajero);
         txtNumeroDocumento = findViewById(R.id.txtNumeroDocumento);
         txtNombrePasajero = findViewById(R.id.txtNombrePasajero);
         spOrigenes = findViewById(R.id.spOrigen);

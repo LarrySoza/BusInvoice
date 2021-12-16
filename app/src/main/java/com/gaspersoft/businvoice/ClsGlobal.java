@@ -201,8 +201,6 @@ public class ClsGlobal {
             PrintHelper.getInstance().printText("FORMA PAGO: ", 22, true, false);
             PrintHelper.getInstance().printText(infoExceso.cpeFormaPago + "\n", 22, false, false);
 
-            PrintHelper.getInstance().printLineDashed();
-
             //DESCRIPCION DEL SERVICIO
             int width[] = new int[]{1, 2, 1};
             int align[] = new int[]{1, 0, 2};
@@ -219,7 +217,7 @@ public class ClsGlobal {
             width = new int[]{3, 1};
             align = new int[]{2, 2};
             PrintHelper.getInstance().printLineDashed();
-            String operacionesExoneradas[] = new String[]{"OP. EXONERADAS: " + infoExceso.cpeSimboloMoneda, infoExceso.cpeTotalOperacionesExoneradas};
+            String operacionesExoneradas[] = new String[]{"OP. GRAVADAS: " + infoExceso.cpeSimboloMoneda, infoExceso.cpeTotalOperacionesGravadas};
             String sumatoriaIGV[] = new String[]{"IGV " + infoExceso.cpeTasaIgv + "%: " + infoExceso.cpeSimboloMoneda, infoExceso.cpeSumatoriaIgv};
             String importeTotal[] = new String[]{"IMPORTE TOTAL: " + infoExceso.cpeSimboloMoneda, infoExceso.cpeImporteTotal};
             PrintHelper.getInstance().printColumnsString(operacionesExoneradas, width, align, false);

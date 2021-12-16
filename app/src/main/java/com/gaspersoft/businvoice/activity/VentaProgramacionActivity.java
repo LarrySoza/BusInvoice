@@ -451,6 +451,7 @@ public class VentaProgramacionActivity extends AppCompatActivity implements Plan
                                     exceso.cpeTipoDocumento_id = boleto.cpeTipoDocumentoId;
                                     exceso.cpeDescripcion = txtDescripcionExceso.getText().toString();
                                     exceso.empresaId = boleto.empresaId;
+                                    exceso.pasajeId = response.body().id;
 
                                     RegistrarExceso(exceso);
 

@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BusInvoice">
         <activity
+            android:name=".activity.ExcesoActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.LiquidacionAdminActivity"
             android:exported="false" />
         <activity

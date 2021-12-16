@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -25,6 +26,8 @@ import com.gaspersoft.businvoice.models.BoletoViajeDto;
 import com.gaspersoft.businvoice.models.DestinoDto;
 import com.gaspersoft.businvoice.models.ErrorDto;
 import com.gaspersoft.businvoice.models.DniDto;
+import com.gaspersoft.businvoice.models.ExcesoDto;
+import com.gaspersoft.businvoice.models.InfoExcesoDto;
 import com.gaspersoft.businvoice.models.InfoPasajeDto;
 import com.gaspersoft.businvoice.models.OrigenDto;
 import com.gaspersoft.businvoice.models.RucDto;
@@ -56,6 +59,9 @@ public class VentaAbiertaActivity extends AppCompatActivity {
     private Button btnConsultarRuc;
     private Button btnRegistrarBoleto;
     private ProgressBar waitControl;
+    private CheckBox chkExceso;
+    private EditText txtMontoExceso;
+    private EditText txtDescripcionExceso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +86,9 @@ public class VentaAbiertaActivity extends AppCompatActivity {
         btnConsultarRuc = findViewById(R.id.btnConsultarRuc);
         btnRegistrarBoleto = findViewById(R.id.btnRegistrar);
         waitControl = findViewById(R.id.waitControl);
+        chkExceso = findViewById(R.id.chkExceso);
+        txtMontoExceso = findViewById(R.id.txtMontoExceso);
+        txtDescripcionExceso = findViewById(R.id.txtDescripcionExceso);
 
         optBoleta.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -89,6 +98,14 @@ public class VentaAbiertaActivity extends AppCompatActivity {
                     txtRazonSocial.setEnabled(false);
                     btnConsultarRuc.setEnabled(false);
                 }
+            }
+        });
+
+        chkExceso.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                txtMontoExceso.setEnabled(isChecked);
+                txtDescripcionExceso.setEnabled(isChecked);
             }
         });
 
@@ -160,6 +177,8 @@ public class VentaAbiertaActivity extends AppCompatActivity {
                 txtNombrePasajero.setError(null);
                 txtRuc.setError(null);
                 txtRazonSocial.setError(null);
+                txtMontoExceso.setError(null);
+                txtDescripcionExceso.setError(null);
 
                 TipoDocumentoDto tipoDocumentoDto = (TipoDocumentoDto) spTipoDocumento.getSelectedItem();
                 String pasajeroNumeroDocumento = txtNumeroDocumento.getText().toString().trim();
@@ -177,7 +196,8 @@ public class VentaAbiertaActivity extends AppCompatActivity {
                 String cpeTipoDocumentoId = "PA"; //por defecto es pasasajes
                 String pasajeroRuc = "";
                 String pasajeroRazonSocial = "";
-
+                String importeExceso = txtMontoExceso.getText().toString();
+                String descripcionExceso = txtDescripcionExceso.getText().toString();
 
                 if (tipoDocumentoDto.id.equals("1")) {
                     if (pasajeroNumeroDocumento.length() != 8) {
@@ -218,6 +238,23 @@ public class VentaAbiertaActivity extends AppCompatActivity {
 
                     if (pasajeroRazonSocial.length() == 0) {
                         txtRazonSocial.setError("Ingrese Razon Social");
+                        validado = false;
+                    }
+                }
+
+                if(chkExceso.isChecked()) {
+                    if (importeExceso.length() == 0) {
+                        txtMontoExceso.setError("Ingrese precio");
+                        validado = false;
+                    } else {
+                        if (Double.parseDouble(importeExceso) == 0) {
+                            txtMontoExceso.setError("Ingrese un valor mayor a 0");
+                            validado = false;
+                        }
+                    }
+
+                    if (descripcionExceso.length() == 0) {
+                        txtDescripcionExceso.setError("Ingrese Descripcion");
                         validado = false;
                     }
                 }
@@ -264,6 +301,11 @@ public class VentaAbiertaActivity extends AppCompatActivity {
         txtNumeroDocumento.setText("");
         txtNombrePasajero.setText("");
         optPasaje.setChecked(true);
+
+        chkExceso.setChecked(false);
+        txtMontoExceso.setEnabled(false);
+        txtDescripcionExceso.setEnabled(false);
+
         txtRuc.setText("");
         txtRazonSocial.setText("");
         btnConsultarDni.setEnabled(true);
@@ -274,6 +316,9 @@ public class VentaAbiertaActivity extends AppCompatActivity {
 
         spTipoDocumento.setSelection(0);
         txtNumeroDocumento.requestFocus();
+
+        txtTarifa.setText("");
+        txtMontoExceso.setText("");
     }
 
     private String GetHeaderToken() {
@@ -351,6 +396,68 @@ public class VentaAbiertaActivity extends AppCompatActivity {
                         try {
                             if (response.isSuccessful()) {
                                 ClsGlobal.ImprimirBoletoViaje(getApplicationContext(), response.body());
+                                if (chkExceso.isChecked()) {
+                                    ExcesoDto exceso = new ExcesoDto();
+                                    exceso.remitenteTipoDocumento = boleto.pasajeroTipoDocumento;
+                                    exceso.remitenteNumeroDocumento = boleto.pasajeroNumeroDocumento;
+                                    exceso.remitenteNombre = boleto.pasajeroNombre;
+                                    exceso.consignadoTipoDocumento = boleto.pasajeroTipoDocumento;
+                                    exceso.consignadoNumeroDocumento = boleto.pasajeroNumeroDocumento;
+                                    exceso.consignadoNombre = boleto.pasajeroNombre;
+
+                                    if(boleto.cpeTipoDocumentoId.equals("01")) {
+                                        exceso.remitenteTipoDocumento = "6";
+                                        exceso.remitenteNumeroDocumento = boleto.pasajeroRuc;
+                                        exceso.remitenteNombre = boleto.pasajeroRazonSocial;
+                                    }
+
+                                    exceso.origenId = boleto.origenId;
+                                    exceso.destinoId = boleto.destinoId;
+                                    exceso.cpeImporteTotal = Double.parseDouble(txtMontoExceso.getText().toString());
+                                    exceso.cpeTipoDocumento_id = boleto.cpeTipoDocumentoId;
+                                    exceso.cpeDescripcion = txtDescripcionExceso.getText().toString();
+                                    exceso.empresaId = boleto.empresaId;
+                                    exceso.pasajeId = response.body().id;
+
+                                    RegistrarExceso(exceso);
+
+                                } else {
+                                    Limpiar();
+                                }
+                            } else {
+                                if (response.errorBody() != null) {
+                                    ErrorDto.ShowErrorDto(getApplicationContext(), response.errorBody().charStream());
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Error al registrar pasaje", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        } catch (Exception ex) {
+                            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+                        if(!chkExceso.isChecked()) {
+                            waitControl.setVisibility(View.GONE);
+                            btnRegistrarBoleto.setEnabled(true);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<InfoPasajeDto> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
+                        waitControl.setVisibility(View.GONE);
+                        btnRegistrarBoleto.setEnabled(true);
+                    }
+                });
+    }
+
+    public void RegistrarExceso(ExcesoDto exceso) {
+        ApiClient.GetService().RegistrarExceso(GetHeaderToken(), exceso)
+                .enqueue(new Callback<InfoExcesoDto>() {
+                    @Override
+                    public void onResponse(Call<InfoExcesoDto> call, Response<InfoExcesoDto> response) {
+                        try {
+                            if (response.isSuccessful()) {
+                                ClsGlobal.ImprimirExceso (getApplicationContext(), response.body());
                                 Limpiar();
                             } else {
                                 if (response.errorBody() != null) {
@@ -368,7 +475,7 @@ public class VentaAbiertaActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<InfoPasajeDto> call, Throwable t) {
+                    public void onFailure(Call<InfoExcesoDto> call, Throwable t) {
                         Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
                         waitControl.setVisibility(View.GONE);
                         btnRegistrarBoleto.setEnabled(true);

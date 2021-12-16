@@ -78,7 +78,7 @@ public class VentaAbiertaActivity extends AppCompatActivity {
         optPasaje = findViewById(R.id.optPasaje);
         btnConsultarDni = findViewById(R.id.btnConsultarDni);
         btnConsultarRuc = findViewById(R.id.btnConsultarRuc);
-        btnRegistrarBoleto = findViewById(R.id.btnRegistrarVentaAbierta);
+        btnRegistrarBoleto = findViewById(R.id.btnRegistrar);
         waitControl = findViewById(R.id.waitControl);
 
         optBoleta.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

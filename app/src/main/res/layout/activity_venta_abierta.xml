@@ -6,192 +6,154 @@
     android:layout_height="match_parent"
     tools:context=".activity.VentaAbiertaActivity">
 
-    <Button
-        android:id="@+id/btnConsultarRuc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
-        android:text="Buscar"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/txtRazonSocial"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txtRuc"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
-
-    <EditText
-        android:id="@+id/txtRazonSocial"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:hint="Razon Social"
-        android:inputType="textCapCharacters"
-        android:textSize="14sp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRuc" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/txtRuc"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="RUC"
-        android:inputType="number"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/btnConsultarRuc"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
-
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTarifa">
-
-        <RadioButton
-            android:id="@+id/optPasaje"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="PASAJE"
-            android:textSize="14sp" />
+            android:orientation="vertical" >
 
-        <RadioButton
-            android:id="@+id/optBoleta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:checked="false"
-            android:text="BOLETA"
-            android:textSize="14sp" />
 
-        <RadioButton
-            android:id="@+id/optFactura"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="FACTURA"
-            android:textSize="14sp" />
-    </RadioGroup>
+            <Spinner
+                android:id="@+id/spTipoDocumentoPasajero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    <Spinner
-        android:id="@+id/spOrigen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNombrePasajero" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-    <EditText
-        android:id="@+id/txtTarifa"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
-        android:ems="10"
-        android:hint="Tarifa"
-        android:inputType="numberDecimal"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spDestino" />
+                <EditText
+                    android:id="@+id/txtNumeroDocumento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+                    android:ems="10"
+                    android:hint="Numero Documento"
+                    android:inputType="textPersonName" />
 
-    <Spinner
-        android:id="@+id/spDestino"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spOrigen" />
+                <Button
+                    android:id="@+id/btnConsultarDni"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Buscar" />
 
-    <Button
-        android:id="@+id/btnRegistrarVentaAbierta"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="32dp"
-        android:text="Registrar Boleto"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRazonSocial" />
+            </TableRow>
 
-    <Spinner
-        android:id="@+id/spTipoDocumentoPasajero"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <EditText
+                android:id="@+id/txtNombrePasajero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Nombre" />
 
-    <EditText
-        android:id="@+id/txtNumeroDocumento"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-        android:ems="10"
-        android:hint="Numero Documento"
-        android:inputType="textPersonName"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/btnConsultarDni"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spUsuarios" />
+            <Spinner
+                android:id="@+id/spOrigen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/txtNombrePasajero"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="32dp"
-        android:ems="10"
-        android:hint="Nombre"
-        android:inputType="textCapCharacters"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNumeroDocumento" />
+            <Spinner
+                android:id="@+id/spDestino"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/btnConsultarDni"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="8dp"
-        android:text="Buscar"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/txtNombrePasajero"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txtNumeroDocumento"
-        app:layout_constraintTop_toBottomOf="@+id/spUsuarios" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <EditText
+                    android:id="@+id/txtTarifa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="Tarifa"
+                    android:inputType="numberDecimal" />
+
+                <EditText
+                    android:id="@+id/txtNumeroAsiento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:hint="Asiento"
+                    android:inputType="number"
+                    android:visibility="invisible" />
+            </TableRow>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <RadioButton
+                    android:id="@+id/optPasaje"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="PASAJE" />
+
+                <RadioButton
+                    android:id="@+id/optBoleta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="BOLETA" />
+
+                <RadioButton
+                    android:id="@+id/optFactura"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="FACTURA" />
+
+            </RadioGroup>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <EditText
+                    android:id="@+id/txtRuc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:hint="RUC"
+                    android:inputType="number" />
+
+                <Button
+                    android:id="@+id/btnConsultarRuc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Buscar" />
+
+            </TableRow>
+
+            <EditText
+                android:id="@+id/txtRazonSocial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Razon Social"
+                android:ems="10"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/btnRegistrar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Registrar Boleto" />
+        </LinearLayout>
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/waitControl"
@@ -203,6 +165,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -146,6 +146,35 @@
                 android:ems="10"
                 android:inputType="textPersonName" />
 
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <CheckBox
+                    android:id="@+id/chkExceso"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Exceso" />
+
+                <EditText
+                    android:id="@+id/txtMontoExceso"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="numberDecimal" />
+
+            </TableRow>
+
+            <EditText
+                android:id="@+id/txtDescripcionExceso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Descripcion"
+                android:inputType="textPersonName" />
+
             <Button
                 android:id="@+id/btnRegistrar"
                 android:layout_width="match_parent"

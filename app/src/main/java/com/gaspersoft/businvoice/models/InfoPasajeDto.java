@@ -8,6 +8,8 @@ public class InfoPasajeDto {
         return cpeNumeroDocumento + "\n" + pasajeroNombre + "\n" + pasajePuntoOrigen + " -> " + pasajePuntoLlegada + "\n" + cpeSimboloMoneda + " " + cpeImporteTotal;
     }
 
+    public String id;
+
     @SerializedName("empresaNombre")
     @Expose
     public String empresaNombre;

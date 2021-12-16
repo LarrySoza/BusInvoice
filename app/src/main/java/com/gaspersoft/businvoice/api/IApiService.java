@@ -3,6 +3,8 @@ package com.gaspersoft.businvoice.api;
 import com.gaspersoft.businvoice.models.BoletoViajeDto;
 import com.gaspersoft.businvoice.models.BusDto;
 import com.gaspersoft.businvoice.models.DestinoDto;
+import com.gaspersoft.businvoice.models.ExcesoDto;
+import com.gaspersoft.businvoice.models.InfoExcesoDto;
 import com.gaspersoft.businvoice.models.ProgramacionDto;
 import com.gaspersoft.businvoice.models.DniDto;
 import com.gaspersoft.businvoice.models.InfoPasajeDto;
@@ -29,6 +31,9 @@ public interface IApiService {
 
     @POST("/api/venta-ruta")
     Call<InfoPasajeDto> RegistrarViaje(@Header("Authorization") String token,@Body BoletoViajeDto boleto);
+
+    @POST("/api/exceso")
+    Call<InfoExcesoDto> RegistrarExceso(@Header("Authorization") String token, @Body ExcesoDto exceso);
 
     @GET("/api/tipo-documento-identidad")
     Call<List<TipoDocumentoDto>> ListarTipoDocumentoIdentidad(@Header("Authorization") String token);

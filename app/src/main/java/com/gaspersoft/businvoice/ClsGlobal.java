@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.Toast;
 
+import com.gaspersoft.businvoice.models.InfoExcesoDto;
 import com.gaspersoft.businvoice.models.InfoPasajeDto;
 import com.gaspersoft.businvoice.utils.PrintHelper;
 import com.gaspersoft.businvoice.utils.*;
@@ -75,7 +76,7 @@ public class ClsGlobal {
         return new String[]{"10", "15", "17", "20"};
     }
 
-    public static void ImprimirCpe(Context context, InfoPasajeDto infoPasaje) {
+    public static void ImprimirBoletoViaje(Context context, InfoPasajeDto infoPasaje) {
 
         if(PrintHelper.getInstance().sunmiPrinter==PrintHelper.NoSunmiPrinter) {
             Toast.makeText(context, "Impresora no disponible", Toast.LENGTH_LONG).show();
@@ -160,6 +161,77 @@ public class ClsGlobal {
             PrintHelper.getInstance().printQr(infoPasaje.cpeResumenQr, print_size, error_level);
             PrintHelper.getInstance().printLineDashed();
             PrintHelper.getInstance().printText(infoPasaje.cpeUrlConsulta + "\n", 22, false, false);
+            PrintHelper.getInstance().feedPaper();
+
+        } else {
+            Toast.makeText(context, "Error de impresora", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static void ImprimirExceso(Context context, InfoExcesoDto infoExceso) {
+
+        if (PrintHelper.getInstance().sunmiPrinter == PrintHelper.NoSunmiPrinter) {
+            Toast.makeText(context, "Impresora no disponible", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (!BluetoothUtil.isBlueToothPrinter) {
+            PrintHelper.getInstance().initPrinter();
+            //0=Left  1=Center  2=Right
+            PrintHelper.getInstance().setAlign(1);
+
+            //Cabecera del documento
+            Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.drawable.viaunoo);
+            PrintHelper.getInstance().printBitmap(logo);
+            PrintHelper.getInstance().printLine();
+            PrintHelper.getInstance().printText(infoExceso.empresaNombre + "\n", 22, true, false);
+            PrintHelper.getInstance().printText(infoExceso.empresaDireccion + "\n", 22, false, false);
+            PrintHelper.getInstance().printText("RUC:" + infoExceso.empresaRuc + "\n", 22, true, false);
+            PrintHelper.getInstance().printText(infoExceso.cpeNombreDocumento + "\n", 22, true, false);
+            PrintHelper.getInstance().printText("N° " + infoExceso.cpeNumeroDocumento + "\n", 22, true, false);
+
+            PrintHelper.getInstance().printLineDashed();
+            PrintHelper.getInstance().setAlign(0);
+            PrintHelper.getInstance().printText("FECHA EMISION: ", 22, true, false);
+            PrintHelper.getInstance().printText(infoExceso.cpeFechaEmision + "\n", 22, false, false);
+            PrintHelper.getInstance().printText(infoExceso.clienteTipoDocumento + ": ", 22, true, false);
+            PrintHelper.getInstance().printText(infoExceso.clienteNumeroDocumento + "\n", 22, false, false);
+            PrintHelper.getInstance().printText("NOMBRE/RAZON SOCIAL: ", 22, true, false);
+            PrintHelper.getInstance().printText(infoExceso.clienteNombre + "\n", 22, false, false);
+            PrintHelper.getInstance().printText("FORMA PAGO: ", 22, true, false);
+            PrintHelper.getInstance().printText(infoExceso.cpeFormaPago + "\n", 22, false, false);
+
+            PrintHelper.getInstance().printLineDashed();
+
+            //DESCRIPCION DEL SERVICIO
+            int width[] = new int[]{1, 2, 1};
+            int align[] = new int[]{1, 0, 2};
+            PrintHelper.getInstance().printLineDashed();
+
+            String cabecera[] = new String[]{"CANT.", "DESCRIPCION", "P. UNT."};
+            PrintHelper.getInstance().printColumnsString(cabecera, width, align, true);
+
+            PrintHelper.getInstance().printLineDashed();
+            String detalle[] = new String[]{"1", infoExceso.cpeDescripcionServicio, infoExceso.cpeImporteTotal};
+            PrintHelper.getInstance().printColumnsString(detalle, width, align, false);
+
+            //Totales
+            width = new int[]{3, 1};
+            align = new int[]{2, 2};
+            PrintHelper.getInstance().printLineDashed();
+            String operacionesExoneradas[] = new String[]{"OP. EXONERADAS: " + infoExceso.cpeSimboloMoneda, infoExceso.cpeTotalOperacionesExoneradas};
+            String sumatoriaIGV[] = new String[]{"IGV " + infoExceso.cpeTasaIgv + "%: " + infoExceso.cpeSimboloMoneda, infoExceso.cpeSumatoriaIgv};
+            String importeTotal[] = new String[]{"IMPORTE TOTAL: " + infoExceso.cpeSimboloMoneda, infoExceso.cpeImporteTotal};
+            PrintHelper.getInstance().printColumnsString(operacionesExoneradas, width, align, false);
+            PrintHelper.getInstance().printColumnsString(sumatoriaIGV, width, align, false);
+            PrintHelper.getInstance().printColumnsString(importeTotal, width, align, true);
+
+            //Codigo Qr
+            PrintHelper.getInstance().printLineDashed();
+            PrintHelper.getInstance().setAlign(1);
+            PrintHelper.getInstance().printQr(infoExceso.cpeResumenQr, print_size, error_level);
+            PrintHelper.getInstance().printLineDashed();
+            PrintHelper.getInstance().printText(infoExceso.cpeUrlConsulta + "\n", 22, false, false);
             PrintHelper.getInstance().feedPaper();
 
         } else {

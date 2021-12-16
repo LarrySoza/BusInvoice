@@ -66,7 +66,7 @@ public class BuscarBoletoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (selectedItem != null) {
-                    ClsGlobal.ImprimirCpe(getApplicationContext(), selectedItem);
+                    ClsGlobal.ImprimirBoletoViaje(getApplicationContext(), selectedItem);
                 } else {
                     Toast.makeText(getApplicationContext(), "Seleccione boleto", Toast.LENGTH_SHORT).show();
                 }

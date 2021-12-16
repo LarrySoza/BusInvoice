@@ -350,7 +350,7 @@ public class VentaAbiertaActivity extends AppCompatActivity {
                     public void onResponse(Call<InfoPasajeDto> call, Response<InfoPasajeDto> response) {
                         try {
                             if (response.isSuccessful()) {
-                                ClsGlobal.ImprimirCpe(getApplicationContext(), response.body());
+                                ClsGlobal.ImprimirBoletoViaje(getApplicationContext(), response.body());
                                 Limpiar();
                             } else {
                                 if (response.errorBody() != null) {

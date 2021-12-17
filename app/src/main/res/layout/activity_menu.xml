@@ -7,27 +7,13 @@
     tools:context=".activity.MenuActivity">
 
     <Button
-        android:id="@+id/btnEmitirBoletosVentaAbierta"
+        android:id="@+id/btnExcesos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="32dp"
-        android:text="PASAJES VENTA ABIERTA"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnEmitirBoletosProgramacion" />
-
-    <Button
-        android:id="@+id/btnReImprimir"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:text="BUSCAR BOLETO (REIMPRIMIR)"
+        android:text="EXCESOS"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -35,11 +21,39 @@
         app:layout_constraintTop_toBottomOf="@+id/btnEmitirBoletosVentaAbierta" />
 
     <Button
+        android:id="@+id/btnEmitirBoletosVentaAbierta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="32dp"
+        android:text="PASAJES VENTA ABIERTA"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEmitirBoletosProgramacion" />
+
+    <Button
+        android:id="@+id/btnLiquidacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="32dp"
+        android:text="Consultar liquidacion"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnReImprimir" />
+
+    <Button
         android:id="@+id/btnCesarSesion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="32dp"
         android:text="CERRAR SESION"
         android:textSize="18sp"
@@ -49,18 +63,18 @@
         app:layout_constraintTop_toBottomOf="@+id/btnLiquidacion" />
 
     <Button
-        android:id="@+id/btnLiquidacion"
+        android:id="@+id/btnReImprimir"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="32dp"
-        android:text="Consultar liquidacion"
+        android:text="BUSCAR BOLETO (REIMPRIMIR)"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnReImprimir" />
+        app:layout_constraintTop_toBottomOf="@+id/btnExcesos" />
 
     <Button
         android:id="@+id/btnEmitirBoletosProgramacion"

@@ -1,6 +1,8 @@
 package com.gaspersoft.businvoice;
 
+import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.Toast;
@@ -12,12 +14,17 @@ import com.gaspersoft.businvoice.utils.*;
 
 import retrofit2.Callback;
 
-public class ClsGlobal {
+public class ClsGlobal extends Application {
+    public static String instabus="";
     private static int print_size = 6;
     private static int error_level = 3;
 
     public static String getBaseUrl() {
-        return "https://viaunooapiv2.gaspersoft.com";
+        if (instabus.equals("")) {
+            return "https://viaunooapiv2.gaspersoft.com";
+        } else {
+            return "https://instabusapi.gaspersoft.com";
+        }
     }
 
     public static Integer getEmpresaId() {
@@ -90,6 +97,11 @@ public class ClsGlobal {
 
             //Cabecera del documento
             Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.drawable.viaunoo);
+
+            if (!instabus.equals("")) {
+                logo = BitmapFactory.decodeResource(context.getResources(), R.drawable.intabusbg);
+            }
+
             PrintHelper.getInstance().printBitmap(logo);
             PrintHelper.getInstance().printLine();
             PrintHelper.getInstance().printText(infoPasaje.empresaNombre + "\n", 22, true, false);
@@ -182,6 +194,11 @@ public class ClsGlobal {
 
             //Cabecera del documento
             Bitmap logo = BitmapFactory.decodeResource(context.getResources(), R.drawable.viaunoo);
+
+            if (!instabus.equals("")) {
+                logo = BitmapFactory.decodeResource(context.getResources(), R.drawable.intabusbg);
+            }
+
             PrintHelper.getInstance().printBitmap(logo);
             PrintHelper.getInstance().printLine();
             PrintHelper.getInstance().printText(infoExceso.empresaNombre + "\n", 22, true, false);

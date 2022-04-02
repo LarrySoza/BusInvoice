@@ -85,7 +85,7 @@
         android:layout_marginEnd="32dp"
         android:text="REIMPRIMIR"
         android:textSize="18sp"
-        android:enabled="false"
+        android:enabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

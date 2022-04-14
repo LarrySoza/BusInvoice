@@ -32,7 +32,8 @@ public class PlanoBusDialog extends DialogFragment {
     private String tokenStr;
 
     private int programacionId;
-    private int progitem;
+    private String origenId;
+    private String destinoId;
     private Button btnPrimerPiso;
     private Button btnSegundoPiso;
     private List<Button> botones;
@@ -56,9 +57,10 @@ public class PlanoBusDialog extends DialogFragment {
         return "Bearer " + tokenStr;
     }
 
-    public PlanoBusDialog(String token, int programacionId, int progitem) {
+    public PlanoBusDialog(String token, int programacionId, String origenId, String destinoId) {
         this.programacionId = programacionId;
-        this.progitem = progitem;
+        this.origenId = origenId;
+        this.destinoId = destinoId;
         this.tokenStr = token;
     }
 
@@ -125,6 +127,10 @@ public class PlanoBusDialog extends DialogFragment {
         }
 
         for (Button b : botones) {
+            b.setText("");
+            b.setTag(null);
+            b.setVisibility(View.INVISIBLE);
+
             String id = v.getResources().getResourceEntryName(b.getId());
 
             for (BusItemDto item : bus.itemsPrimerPiso) {
@@ -160,6 +166,10 @@ public class PlanoBusDialog extends DialogFragment {
         }
 
         for (Button b : botones) {
+            b.setText("");
+            b.setTag(null);
+            b.setVisibility(View.INVISIBLE);
+
             String id = v.getResources().getResourceEntryName(b.getId());
 
             for (BusItemDto item : bus.itemsSegundoPiso) {
@@ -184,7 +194,7 @@ public class PlanoBusDialog extends DialogFragment {
     }
 
     private void MakeBus() {
-        ApiClient.GetService().GetMapaBus(GetHeaderToken(), programacionId, progitem)
+        ApiClient.GetService().GetMapaBus(GetHeaderToken(), programacionId,origenId,destinoId)
                 .enqueue(new Callback<BusDto>() {
                     @Override
                     public void onResponse(Call<BusDto> call, Response<BusDto> response) {

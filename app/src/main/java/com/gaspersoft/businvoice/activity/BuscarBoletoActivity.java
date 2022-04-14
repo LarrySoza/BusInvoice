@@ -138,8 +138,8 @@ public class BuscarBoletoActivity extends AppCompatActivity {
                 });
     }
 
-    public void CargarProgramaciones(String fecha, String origenId) {
-        ApiClient.GetService().ListarProgramaciones(GetHeaderToken(), ClsGlobal.getEmpresaId(), fecha, origenId)
+    public void CargarProgramaciones(String origenId, String destinoId,String fecha) {
+        ApiClient.GetService().ListarProgramaciones(GetHeaderToken(), ClsGlobal.getEmpresaId(), origenId, destinoId, fecha)
                 .enqueue(new Callback<List<ProgramacionDto>>() {
                     @Override
                     public void onResponse(Call<List<ProgramacionDto>> call, Response<List<ProgramacionDto>> response) {
@@ -195,7 +195,7 @@ public class BuscarBoletoActivity extends AppCompatActivity {
                                         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                         String strDate = dateFormat.format(date);
 
-                                        CargarProgramaciones(strDate, origen.id);
+                                        CargarProgramaciones(origen.id,"", strDate);
                                     }
 
                                     @Override

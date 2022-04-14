@@ -47,14 +47,14 @@ public interface IApiService {
     @GET("/api/destino/{origenId}")
     Call<List<DestinoDto>> ListarDestinos(@Header("Authorization") String token, @Path("origenId") String origenId);
 
-    @GET("/api/bus/{programacionId}/{item}")
-    Call<BusDto> GetMapaBus(@Header("Authorization") String token, @Path("programacionId") Integer programacionId, @Path("item") Integer item);
+    @GET("/api/bus/{programacionId}/{origenId}/{destinoId}")
+    Call<BusDto> GetMapaBus(@Header("Authorization") String token, @Path("programacionId") Integer programacionId, @Path("origenId") String origenId, @Path("destinoId") String destinoId);
 
     @GET("/api/usuario")
     Call<List<UsuarioDto>> GetUsuarios(@Header("Authorization") String token);
 
-    @GET("/api/programacion/{empresaId}/{fecha}/{origenId}")
-    Call<List<ProgramacionDto>> ListarProgramaciones(@Header("Authorization") String token, @Path("empresaId") int empresaId, @Path("fecha") String fecha, @Path("origenId") String origenId);
+    @GET("/api/programacion/{empresaId}/{origenId}/{destinoId}/{fecha}")
+    Call<List<ProgramacionDto>> ListarProgramaciones(@Header("Authorization") String token, @Path("empresaId") int empresaId, @Path("origenId") String origenId, @Path("destinoId") String destinoId, @Path("fecha") String fecha);
 
     @GET("/api/ruc/{ruc}")
     Call<RucDto> GetEmpresa(@Header("Authorization") String token, @Path("ruc") String ruc);

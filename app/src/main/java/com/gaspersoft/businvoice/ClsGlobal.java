@@ -21,7 +21,7 @@ public class ClsGlobal extends Application {
 
     public static String getBaseUrl() {
         if (instabus.equals("")) {
-            return "https://viaunooapiv2.gaspersoft.com";
+            return "https://viaunooapi.gaspersoft.com";
         } else {
             return "https://instabusapi.gaspersoft.com";
         }

@@ -47,7 +47,6 @@ public class PlanoBusDialog extends DialogFragment {
 
     public interface OnSeleccionarAsientoListener {
         void OnSeleccionarAsiento(Integer asiento, Double tarifa);
-
         void OnErrorPlanoBus(String mensaje);
     }
 

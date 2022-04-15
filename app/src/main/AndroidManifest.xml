@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -12,6 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BusInvoice">
+        <activity
+            android:name=".activity.VerificarBoletoActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.ExcesoActivity"
             android:exported="false" />

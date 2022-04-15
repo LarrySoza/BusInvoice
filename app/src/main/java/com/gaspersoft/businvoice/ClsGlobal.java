@@ -12,6 +12,11 @@ import com.gaspersoft.businvoice.models.InfoPasajeDto;
 import com.gaspersoft.businvoice.utils.PrintHelper;
 import com.gaspersoft.businvoice.utils.*;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import retrofit2.Callback;
 
 public class ClsGlobal extends Application {
@@ -127,6 +132,11 @@ public class ClsGlobal extends Application {
 
             PrintHelper.getInstance().printLineDashed();
 
+            //Hora Impresion
+            SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+            Calendar calendar = Calendar.getInstance();
+            String currentTime = df.format(calendar.getTime());
+
             //Informacion del pasajero
             PrintHelper.getInstance().setAlign(1);
             PrintHelper.getInstance().printText("INFORMACION DEL PASAJERO" + "\n", 22, true, false);
@@ -142,7 +152,9 @@ public class ClsGlobal extends Application {
             PrintHelper.getInstance().printText("FECHA DE VIAJE: ", 22, true, false);
             PrintHelper.getInstance().printText(infoPasaje.pasajeFechaViaje + "\n", 22, false, false);
             PrintHelper.getInstance().printText("NUMERO DE ASIENTO: ", 22, true, false);
-            PrintHelper.getInstance().printText(infoPasaje.pasajeNumeroAsiento + "\n", 22, false, false);
+            PrintHelper.getInstance().printText(infoPasaje.pasajeNumeroAsiento + " ", 22, false, false);
+            PrintHelper.getInstance().printText("IMP: ", 22, true, false);
+            PrintHelper.getInstance().printText( currentTime + "\n", 22, false, false);
 
             //DESCRIPCION DEL SERVICIO
             int width[] = new int[]{1, 2, 1};

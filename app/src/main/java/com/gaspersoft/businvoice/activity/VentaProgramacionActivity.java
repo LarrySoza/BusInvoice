@@ -200,7 +200,8 @@ public class VentaProgramacionActivity extends AppCompatActivity implements Plan
                 }
 
                 OrigenDto origenDto = (OrigenDto) spOrigenes.getSelectedItem();
-                ProgramacionDto programacionDto = (ProgramacionDto) spDestinos.getSelectedItem();
+                ProgramacionDto programacionDto = (ProgramacionDto) spProgramacion.getSelectedItem();
+                DestinoDto destinoDto = (DestinoDto) spDestinos.getSelectedItem();
                 String cpeImporteTotal = txtTarifa.getText().toString();
                 String asiento = txtNumeroAsiento.getText().toString();
                 String cpeTipoDocumentoId = "PA"; //por defecto es pasasajes
@@ -279,7 +280,7 @@ public class VentaProgramacionActivity extends AppCompatActivity implements Plan
                     boleto.pasajeroNumeroDocumento = pasajeroNumeroDocumento;
                     boleto.pasajeroNombre = pasajeroNombre;
                     boleto.origenId = origenDto.id;
-                    boleto.destinoId = programacionDto.id;
+                    boleto.destinoId = destinoDto.id;
                     boleto.cpeImporteTotal = Double.parseDouble(cpeImporteTotal);
                     boleto.cpeTipoDocumentoId = cpeTipoDocumentoId;
                     boleto.pasajeroRuc = pasajeroRuc;

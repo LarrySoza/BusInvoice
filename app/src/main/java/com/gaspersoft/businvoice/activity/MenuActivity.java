@@ -21,6 +21,7 @@ public class MenuActivity extends AppCompatActivity {
     private Button btnLiquidacion;
     private Button btnEmitirBoletosVentaAbierta;
     private Button btnExcesos;
+    private Button btnVerificarBoleto;
     private String tipoUsuario;
 
     @Override
@@ -35,6 +36,7 @@ public class MenuActivity extends AppCompatActivity {
         btnLiquidacion = findViewById(R.id.btnLiquidacion);
         btnEmitirBoletosVentaAbierta = findViewById(R.id.btnEmitirBoletosVentaAbierta);
         btnExcesos = findViewById(R.id.btnExcesos);
+        btnVerificarBoleto = findViewById(R.id.btnVerificarBoleto);
 
         SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
         String nombreUsuario = preferences.getString("usuario", "");
@@ -71,6 +73,14 @@ public class MenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent frmEmitirBoleto = new Intent(getApplicationContext(), VentaProgramacionActivity.class);
                 startActivity(frmEmitirBoleto);
+            }
+        });
+
+        btnVerificarBoleto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent frmVerificarBoleto = new Intent(getApplicationContext(), VerificarBoletoActivity.class);
+                startActivity(frmVerificarBoleto);
             }
         });
 

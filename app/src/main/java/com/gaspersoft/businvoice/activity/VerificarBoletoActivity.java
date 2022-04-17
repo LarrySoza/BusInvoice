@@ -27,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class VerificarBoletoActivity extends AppCompatActivity implements BarcodeDialog.OnScanListener {
+public class VerificarBoletoActivity extends AppCompatActivity implements BarcodeDialog.OnScanListener,InfoBoletoDialog.OnCerrarListener {
     private String tokenStr;
     private ImageView imgScan;
     private Button btnConfirmaBoleto;
@@ -119,8 +119,6 @@ public class VerificarBoletoActivity extends AppCompatActivity implements Barcod
                         btnConfirmaBoleto.setEnabled(true);
                     }
 
-
-
                     @Override
                     public void onFailure(Call<InfoPasajeDto> call, Throwable t) {
                         Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
@@ -131,8 +129,8 @@ public class VerificarBoletoActivity extends AppCompatActivity implements Barcod
     }
 
     private void MostrarInfoPasaje(InfoPasajeDto body) {
-        InfoBoletoDialog infoBoleto=new InfoBoletoDialog(body);
-        infoBoleto.show(this.getSupportFragmentManager(),"Info");
+        InfoBoletoDialog infoBoleto = new InfoBoletoDialog(body);
+        infoBoleto.show(this.getSupportFragmentManager(), "Info");
     }
 
     private String GetHeaderToken() {
@@ -140,6 +138,8 @@ public class VerificarBoletoActivity extends AppCompatActivity implements Barcod
     }
 
     private void showScan() {
+        txtSerieBoleto.setText("");
+        txtNumeroBoleto.setText("");
         BarcodeDialog barCode = new BarcodeDialog();
         barCode.show(this.getSupportFragmentManager(), "barCode");
     }
@@ -148,17 +148,41 @@ public class VerificarBoletoActivity extends AppCompatActivity implements Barcod
     public void OnLeerBarCode(String barCodeData) {
         String separador = Pattern.quote("|");
         String[] parts = barCodeData.split(separador);
-        txtSerieBoleto.setText("");
-        txtNumeroBoleto.setText("");
+        Boolean validado = true;
 
         if (parts.length >= 9) {
             String serie = parts[2].trim();
             String numero = parts[3].trim();
 
-            if (serie.length() == 4) {
-                txtSerieBoleto.setText(serie);
-                txtNumeroBoleto.setText(numero);
+            if (serie.length() != 4) {
+                //txtSerieBoleto.setError("Serie no valida");
+                validado = false;
+            } else {
+                if (!(serie.startsWith("F") || serie.startsWith("B"))) {
+                    //txtSerieBoleto.setError("Serie debe empezar con F ó B");
+                    validado = false;
+                }
+            }
+
+            if (numero.length() == 0) {
+                //txtNumeroBoleto.setError("Ingrese Numero");
+                validado = false;
+            }
+
+            if (validado) {
+                waitControl.setVisibility(View.VISIBLE);
+                btnConfirmaBoleto.setEnabled(false);
+
+                String id = serie + ClsGlobal.padLeftZeros(numero, 7);
+
+                ConfirmarBoleto(id);
             }
         }
+    }
+
+    @Override
+    public void OnCerrar() {
+        txtSerieBoleto.setText("");
+        txtNumeroBoleto.setText("");
     }
 }

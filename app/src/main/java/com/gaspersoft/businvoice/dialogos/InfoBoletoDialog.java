@@ -2,6 +2,7 @@ package com.gaspersoft.businvoice.dialogos;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,6 +32,12 @@ public class InfoBoletoDialog extends DialogFragment {
     private TextView lblFechaSupervisor;
     private TextView lblInfoSupervisor;
     private Button btnAceptar;
+
+    public interface OnCerrarListener {
+        void OnCerrar();
+    }
+
+    private OnCerrarListener mCerrarListener;
 
     public InfoBoletoDialog(InfoPasajeDto infoPasaje) {
         this.infoPasaje = infoPasaje;
@@ -65,6 +72,7 @@ public class InfoBoletoDialog extends DialogFragment {
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mCerrarListener.OnCerrar();
                 dismiss();
             }
         });
@@ -103,6 +111,19 @@ public class InfoBoletoDialog extends DialogFragment {
             txtFechaSupervisor.setVisibility(View.GONE);
             lblInfoSupervisor.setVisibility(View.GONE);
             lblFechaSupervisor.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCerrarListener = (OnCerrarListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(
+                    context.toString() +
+                            "no implementó OnScanListener");
         }
     }
 }

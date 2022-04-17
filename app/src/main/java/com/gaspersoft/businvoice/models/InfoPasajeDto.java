@@ -14,6 +14,8 @@ public class InfoPasajeDto {
     @Expose
     public String empresaNombre;
 
+
+
     @SerializedName("empresaDireccion")
     @Expose
     public String empresaDireccion;
@@ -33,6 +35,10 @@ public class InfoPasajeDto {
     @SerializedName("cpeNumeroDocumento")
     @Expose
     public String cpeNumeroDocumento;
+
+    @SerializedName("cpeFechaRegistro")
+    @Expose
+    public String cpeFechaRegistro;
 
     @SerializedName("cpeFechaEmision")
     @Expose
@@ -125,4 +131,12 @@ public class InfoPasajeDto {
     @SerializedName("pasajeNumeroAsiento")
     @Expose
     public String pasajeNumeroAsiento;
+
+    @SerializedName("supervisor")
+    @Expose
+    public String supervisor;
+
+    @SerializedName("fechaConfirmacion")
+    @Expose
+    public String fechaConfirmacion;
 }

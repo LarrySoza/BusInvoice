@@ -24,6 +24,7 @@ import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.Call;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface IApiService {
     @POST("/api/token")
@@ -34,6 +35,9 @@ public interface IApiService {
 
     @POST("/api/exceso")
     Call<InfoExcesoDto> RegistrarExceso(@Header("Authorization") String token, @Body ExcesoDto exceso);
+
+    @POST("/api/confirmar-venta")
+    Call<InfoPasajeDto> ConfirmarVenta(@Header("Authorization") String token, @Query("id") String id);
 
     @GET("/api/tipo-documento-identidad")
     Call<List<TipoDocumentoDto>> ListarTipoDocumentoIdentidad(@Header("Authorization") String token);

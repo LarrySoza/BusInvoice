@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.gaspersoft.businvoice.ClsGlobal;
 import com.gaspersoft.businvoice.R;
 import com.gaspersoft.businvoice.api.ApiClient;
+import com.gaspersoft.businvoice.models.DestinoDto;
 import com.gaspersoft.businvoice.models.ProgramacionDto;
 import com.gaspersoft.businvoice.models.InfoPasajeDto;
 import com.gaspersoft.businvoice.models.OrigenDto;
@@ -45,6 +46,7 @@ public class BuscarBoletoActivity extends AppCompatActivity {
     private InfoPasajeDto selectedItem;
     private Spinner spOrigenes;
     private Spinner spDestinos;
+    private Spinner spProgramacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +60,9 @@ public class BuscarBoletoActivity extends AppCompatActivity {
         lvMovimientos = findViewById(R.id.lvMovimientos);
         btnReimprimir = findViewById(R.id.btnReimprimir);
         lblInfoBoleto = findViewById(R.id.lblInfoBoleto);
-        spOrigenes = findViewById(R.id.spOrigenProgramacion);
-        spDestinos = findViewById(R.id.spDestinoProgramacion);
+        spOrigenes = findViewById(R.id.spOrigenBusqueda);
+        spDestinos = findViewById(R.id.spDestinoBusqueda);
+        spProgramacion =findViewById(R.id.spProgramacionBusqueda);
         btnConsultar=findViewById(R.id.btnListarBoletos);
 
         btnReimprimir.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +91,7 @@ public class BuscarBoletoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    ProgramacionDto programacionDto= (ProgramacionDto) spDestinos.getSelectedItem();
+                    ProgramacionDto programacionDto= (ProgramacionDto) spProgramacion.getSelectedItem();
                     waitControl.setVisibility(View.VISIBLE);
                     btnConsultar.setEnabled(false);
                     GetVentasProgramacion(programacionDto.programacionId);
@@ -138,15 +141,15 @@ public class BuscarBoletoActivity extends AppCompatActivity {
                 });
     }
 
-    public void CargarProgramaciones(String origenId, String destinoId,String fecha) {
+    public void CargarProgramaciones(String origenId, String destinoId, String fecha) {
         ApiClient.GetService().ListarProgramaciones(GetHeaderToken(), ClsGlobal.getEmpresaId(), origenId, destinoId, fecha)
                 .enqueue(new Callback<List<ProgramacionDto>>() {
                     @Override
                     public void onResponse(Call<List<ProgramacionDto>> call, Response<List<ProgramacionDto>> response) {
                         try {
                             if (response.isSuccessful()) {
-                                ArrayAdapter<ProgramacionDto> adapterDestinos = new ArrayAdapter<ProgramacionDto>(getApplicationContext(), R.layout.spinner_item, response.body());
-                                spDestinos.setAdapter(adapterDestinos);
+                                ArrayAdapter<ProgramacionDto> adapterProgramacion = new ArrayAdapter<ProgramacionDto>(getApplicationContext(), R.layout.spinner_item, response.body());
+                                spProgramacion.setAdapter(adapterProgramacion);
                             } else {
                                 if (response.code() == 401) {
                                     SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
@@ -191,11 +194,8 @@ public class BuscarBoletoActivity extends AppCompatActivity {
                                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                         OrigenDto origen = (OrigenDto) spOrigenes.getSelectedItem();
                                         waitControl.setVisibility(View.VISIBLE);
-                                        Date date = Calendar.getInstance().getTime();
-                                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                                        String strDate = dateFormat.format(date);
 
-                                        CargarProgramaciones(origen.id,"", strDate);
+                                        CargarDestinos(origen.id);
                                     }
 
                                     @Override
@@ -226,6 +226,62 @@ public class BuscarBoletoActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<List<OrigenDto>> call, Throwable t) {
                         Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void CargarDestinos(String origenId) {
+        ApiClient.GetService().ListarDestinos(GetHeaderToken(), origenId)
+                .enqueue(new Callback<List<DestinoDto>>() {
+                    @Override
+                    public void onResponse(Call<List<DestinoDto>> call, Response<List<DestinoDto>> response) {
+                        try {
+                            if (response.isSuccessful()) {
+                                ArrayAdapter<DestinoDto> adapterDestinos = new ArrayAdapter<DestinoDto>(getApplicationContext(), R.layout.spinner_item, response.body());
+                                spDestinos.setAdapter(adapterDestinos);
+                                spDestinos.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                    @Override
+                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                        OrigenDto origen = (OrigenDto) spOrigenes.getSelectedItem();
+                                        DestinoDto destino = (DestinoDto) spDestinos.getSelectedItem();
+
+                                        waitControl.setVisibility(View.VISIBLE);
+                                        Date date = Calendar.getInstance().getTime();
+                                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                                        String strDate = dateFormat.format(date);
+
+                                        CargarProgramaciones(origen.id, destino.id, strDate);
+                                    }
+
+                                    @Override
+                                    public void onNothingSelected(AdapterView<?> parent) {
+
+                                    }
+                                });
+                            } else {
+                                if (response.code() == 401) {
+                                    SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor objEditor = preferences.edit();
+                                    objEditor.putString("token", "");
+                                    objEditor.commit();
+
+                                    Intent frmLogin = new Intent(getApplicationContext(), VentaProgramacionActivity.class);
+                                    startActivity(frmLogin);
+                                    finish();
+
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "El servidor devolvio codigo" + response.code(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        } catch (Exception ex) {
+                            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<DestinoDto>> call, Throwable t) {
+                        Toast.makeText(getApplicationContext(), "Error al consumir Api", Toast.LENGTH_SHORT).show();
+                        waitControl.setVisibility(View.GONE);
                     }
                 });
     }

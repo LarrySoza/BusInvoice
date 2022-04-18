@@ -25,6 +25,7 @@ public class InfoBoletoDialog extends DialogFragment {
     private EditText txtInfoFechaEmision;
     private EditText txtInfoSupervisor;
     private EditText txtFechaSupervisor;
+    private EditText txtInfoBusBoleto;
     private InfoPasajeDto infoPasaje;
 
     private TextView lblNumeroBoleto;
@@ -62,6 +63,7 @@ public class InfoBoletoDialog extends DialogFragment {
         txtInfoFechaEmision = v.findViewById(R.id.txtInfoFechaRegistro);
         txtInfoSupervisor = v.findViewById(R.id.txtInfoSupervisor);
         txtFechaSupervisor = v.findViewById(R.id.txtFechaSupervisor);
+        txtInfoBusBoleto = v.findViewById(R.id.txtInfoBusBoleto);
 
         lblNumeroBoleto = v.findViewById(R.id.lblNumeroBoleto);
         lblInfoEstado = v.findViewById(R.id.lblInfoEstado);
@@ -78,7 +80,6 @@ public class InfoBoletoDialog extends DialogFragment {
         });
 
         MostrarDatos();
-
         builder.setView(v);
         return builder.create();
     }
@@ -94,6 +95,7 @@ public class InfoBoletoDialog extends DialogFragment {
         lblNumeroBoleto.setText(infoPasaje.cpeNumeroDocumento);
         txtInfoSupervisor.setText(infoPasaje.supervisor);
         txtFechaSupervisor.setText(infoPasaje.fechaConfirmacion);
+        txtInfoBusBoleto.setText(infoPasaje.bus);
 
         if (txtInfoSupervisor.getText().length() > 0) {
             lblInfoEstado.setText("CONFIRMADO");

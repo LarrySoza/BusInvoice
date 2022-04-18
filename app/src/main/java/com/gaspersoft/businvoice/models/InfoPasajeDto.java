@@ -139,4 +139,8 @@ public class InfoPasajeDto {
     @SerializedName("fechaConfirmacion")
     @Expose
     public String fechaConfirmacion;
+
+    @SerializedName("bus")
+    @Expose
+    public String bus;
 }

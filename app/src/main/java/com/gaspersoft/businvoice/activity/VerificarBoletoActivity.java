@@ -81,8 +81,8 @@ public class VerificarBoletoActivity extends AppCompatActivity implements Barcod
                 }
 
                 if (validado) {
-                    waitControl.setVisibility(View.VISIBLE);
                     btnConfirmaBoleto.setEnabled(false);
+                    waitControl.setVisibility(View.VISIBLE);
 
                     String id = serie + ClsGlobal.padLeftZeros(numero, 7);
 
@@ -109,14 +109,15 @@ public class VerificarBoletoActivity extends AppCompatActivity implements Barcod
 
                         if (response.isSuccessful()) {
                             MostrarInfoPasaje(response.body());
+
                         } else {
                             if (response.code() == 404) {
                                 Toast.makeText(getApplicationContext(), "No Existe boleto: " + id, Toast.LENGTH_SHORT).show();
                             }
-                        }
 
-                        waitControl.setVisibility(View.GONE);
-                        btnConfirmaBoleto.setEnabled(true);
+                            waitControl.setVisibility(View.GONE);
+                            btnConfirmaBoleto.setEnabled(true);
+                        }
                     }
 
                     @Override
@@ -129,8 +130,10 @@ public class VerificarBoletoActivity extends AppCompatActivity implements Barcod
     }
 
     private void MostrarInfoPasaje(InfoPasajeDto body) {
-        InfoBoletoDialog infoBoleto = new InfoBoletoDialog(body);
-        infoBoleto.show(this.getSupportFragmentManager(), "Info");
+        InfoBoletoDialog frmInfoBoleto = new InfoBoletoDialog(body);
+        frmInfoBoleto.show(this.getSupportFragmentManager(), "Info");
+        waitControl.setVisibility(View.GONE);
+        btnConfirmaBoleto.setEnabled(true);
     }
 
     private String GetHeaderToken() {
@@ -148,34 +151,19 @@ public class VerificarBoletoActivity extends AppCompatActivity implements Barcod
     public void OnLeerBarCode(String barCodeData) {
         String separador = Pattern.quote("|");
         String[] parts = barCodeData.split(separador);
-        Boolean validado = true;
+        txtSerieBoleto.setText("");
+        txtNumeroBoleto.setText("");
+
+        txtSerieBoleto.setError(null);
+        txtNumeroBoleto.setError(null);
 
         if (parts.length >= 9) {
             String serie = parts[2].trim();
             String numero = parts[3].trim();
 
-            if (serie.length() != 4) {
-                //txtSerieBoleto.setError("Serie no valida");
-                validado = false;
-            } else {
-                if (!(serie.startsWith("F") || serie.startsWith("B"))) {
-                    //txtSerieBoleto.setError("Serie debe empezar con F ó B");
-                    validado = false;
-                }
-            }
-
-            if (numero.length() == 0) {
-                //txtNumeroBoleto.setError("Ingrese Numero");
-                validado = false;
-            }
-
-            if (validado) {
-                waitControl.setVisibility(View.VISIBLE);
-                btnConfirmaBoleto.setEnabled(false);
-
-                String id = serie + ClsGlobal.padLeftZeros(numero, 7);
-
-                ConfirmarBoleto(id);
+            if (serie.length() == 4) {
+                txtSerieBoleto.setText(serie);
+                txtNumeroBoleto.setText(numero);
             }
         }
     }
@@ -184,5 +172,8 @@ public class VerificarBoletoActivity extends AppCompatActivity implements Barcod
     public void OnCerrar() {
         txtSerieBoleto.setText("");
         txtNumeroBoleto.setText("");
+
+        txtSerieBoleto.setError(null);
+        txtNumeroBoleto.setError(null);
     }
 }

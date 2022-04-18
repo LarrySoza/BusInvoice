@@ -114,7 +114,6 @@ public class BarcodeDialog extends DialogFragment {
             }
         });
 
-        // preparo el detector de QR
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
@@ -126,7 +125,7 @@ public class BarcodeDialog extends DialogFragment {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
                 if (barcodes.size() > 0) {
-                    barCodeData = barcodes.valueAt(0).displayValue.toString();
+                    barCodeData = barcodes.valueAt(0).displayValue;
                     mScanListener.OnLeerBarCode(barCodeData);
                     dismiss();
                 }

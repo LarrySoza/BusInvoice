@@ -156,6 +156,9 @@ public class ClsGlobal extends Application {
             PrintHelper.getInstance().printText("IMP: ", 22, true, false);
             PrintHelper.getInstance().printText( currentTime + "\n", 22, false, false);
 
+            PrintHelper.getInstance().printText("BUS: ", 22, true, false);
+            PrintHelper.getInstance().printText( infoPasaje.bus + "\n", 22, false, false);
+
             //DESCRIPCION DEL SERVICIO
             int width[] = new int[]{1, 2, 1};
             int align[] = new int[]{1, 0, 2};

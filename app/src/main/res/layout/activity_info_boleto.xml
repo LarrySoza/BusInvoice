@@ -5,6 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/lblInfoFechaRegistro2"
+        android:layout_width="105dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="BUS:"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblInfoFechaRegistro" />
+
+    <EditText
+        android:id="@+id/txtInfoBusBoleto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/lblInfoFechaRegistro2"
+        app:layout_constraintTop_toBottomOf="@+id/txtInfoFechaRegistro" />
+
     <EditText
         android:id="@+id/txtInfoFechaRegistro"
         android:layout_width="wrap_content"
@@ -31,50 +56,80 @@
         app:layout_constraintTop_toBottomOf="@+id/txtInfoFechaViaje" />
 
     <EditText
-        android:id="@+id/txtFechaSupervisor"
+        android:id="@+id/txtInfoSupervisor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="24dp"
         android:ems="10"
         android:focusable="false"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintStart_toEndOf="@+id/lblInfoSupervisor"
-        app:layout_constraintTop_toBottomOf="@+id/txtInfoSupervisor" />
+        app:layout_constraintTop_toBottomOf="@+id/lblInfoEstado" />
 
     <TextView
         android:id="@+id/lblFechaSupervisor"
         android:layout_width="105dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="28dp"
         android:text="USUARIO:"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lblInfoEstado" />
 
     <EditText
-        android:id="@+id/txtInfoSupervisor"
+        android:id="@+id/txtFechaSupervisor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:ems="10"
         android:focusable="false"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintStart_toEndOf="@+id/lblInfoSupervisor"
-        app:layout_constraintTop_toBottomOf="@+id/lblInfoEstado" />
+        app:layout_constraintTop_toBottomOf="@+id/txtInfoSupervisor" />
+
+    <Button
+        android:id="@+id/btnAceptar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="24dp"
+        android:text="CERRAR"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtFechaSupervisor" />
+
+    <TextView
+        android:id="@+id/lblInfoEstado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="ESTADO"
+        android:textColor="#F44336"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtInfoBusBoleto" />
 
     <TextView
         android:id="@+id/lblInfoSupervisor"
         android:layout_width="105dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:text="FECHA:"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -125,19 +180,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtInfoDestino" />
 
-    <TextView
-        android:id="@+id/lblInfoEstado"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="ESTADO"
-        android:textColor="#F44336"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtInfoFechaRegistro" />
-
     <EditText
         android:id="@+id/txtInfoOrigen"
         android:layout_width="wrap_content"
@@ -179,18 +221,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/txtInfoViaje"
         app:layout_constraintTop_toBottomOf="@+id/txtInfoDestino" />
-
-    <Button
-        android:id="@+id/btnAceptar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:text="CERRAR"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtFechaSupervisor" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -99,6 +99,7 @@ public class BarcodeDialog extends DialogFragment {
                                 Manifest.permission.CAMERA)) ;
                         requestPermissions(new String[]{Manifest.permission.CAMERA},
                                 MY_PERMISSIONS_REQUEST_CAMERA);
+                        dismiss();
                     }
                     return;
                 } else {

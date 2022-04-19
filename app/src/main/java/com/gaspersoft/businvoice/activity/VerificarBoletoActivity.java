@@ -60,33 +60,11 @@ public class VerificarBoletoActivity extends AppCompatActivity implements Barcod
         btnConfirmaBoleto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Boolean validado = true;
-
                 String serie = txtSerieBoleto.getText().toString();
                 String numero = txtNumeroBoleto.getText().toString();
 
-                if (serie.length() != 4) {
-                    txtSerieBoleto.setError("Serie no valida");
-                    validado = false;
-                } else {
-                    if (!(serie.startsWith("F") || serie.startsWith("B"))) {
-                        txtSerieBoleto.setError("Serie debe empezar con F ó B");
-                        validado = false;
-                    }
-                }
-
-                if (numero.length() == 0) {
-                    txtNumeroBoleto.setError("Ingrese Numero");
-                    validado = false;
-                }
-
-                if (validado) {
-                    btnConfirmaBoleto.setEnabled(false);
-                    waitControl.setVisibility(View.VISIBLE);
-
-                    String id = serie + ClsGlobal.padLeftZeros(numero, 7);
-
-                    ConfirmarBoleto(id);
+                if (Validar(serie, numero, true)) {
+                    ConfirmarBoleto(serie, numero);
                 }
             }
         });
@@ -101,7 +79,12 @@ public class VerificarBoletoActivity extends AppCompatActivity implements Barcod
         }
     }
 
-    private void ConfirmarBoleto(String id) {
+    private void ConfirmarBoleto(String serie, String numero) {
+        btnConfirmaBoleto.setEnabled(false);
+        waitControl.setVisibility(View.VISIBLE);
+
+        String id = serie + ClsGlobal.padLeftZeros(numero, 7);
+
         ApiClient.GetService().ConfirmarVenta(GetHeaderToken(), id)
                 .enqueue(new Callback<InfoPasajeDto>() {
                     @Override
@@ -161,18 +144,43 @@ public class VerificarBoletoActivity extends AppCompatActivity implements Barcod
             String serie = parts[2].trim();
             String numero = parts[3].trim();
 
-            if (serie.length() == 4) {
-                txtSerieBoleto.setText(serie);
-                txtNumeroBoleto.setText(numero);
+            if (Validar(serie, numero, false)) {
+                ConfirmarBoleto(serie, numero);
             }
         }
+    }
+
+    private boolean Validar(String serie, String numero, boolean mostrarAlerta) {
+        boolean validado = true;
+
+        if (serie.length() != 4) {
+            if(mostrarAlerta) {
+                txtSerieBoleto.setError("Serie no valida");
+            }
+            validado = false;
+        } else {
+            if (!(serie.startsWith("F") || serie.startsWith("B"))) {
+                if(mostrarAlerta) {
+                    txtSerieBoleto.setError("Serie debe empezar con F ó B");
+                }
+                validado = false;
+            }
+        }
+
+        if (numero.length() == 0) {
+            if (mostrarAlerta) {
+                txtNumeroBoleto.setError("Ingrese Numero");
+            }
+            validado = false;
+        }
+
+        return validado;
     }
 
     @Override
     public void OnCerrar() {
         txtSerieBoleto.setText("");
         txtNumeroBoleto.setText("");
-
         txtSerieBoleto.setError(null);
         txtNumeroBoleto.setError(null);
     }

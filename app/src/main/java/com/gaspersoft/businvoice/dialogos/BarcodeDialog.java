@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -27,9 +28,12 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.security.Policy;
 
 public class BarcodeDialog extends DialogFragment {
     private View v;
+    public static Camera cam = null; //tiene que ser estatico para que onDestroy no lo destruya
     private CameraSource cameraSource;
     private SurfaceView cameraView;
     private final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
@@ -61,6 +65,7 @@ public class BarcodeDialog extends DialogFragment {
         initQR();
 
         builder.setView(v);
+
         return builder.create();
     }
 
@@ -99,6 +104,7 @@ public class BarcodeDialog extends DialogFragment {
                 } else {
                     try {
                         cameraSource.start(cameraView.getHolder());
+                        OnOffFlashLight();
                     } catch (IOException ie) {
                         Log.e("CAMERA SOURCE", ie.getMessage());
                     }
@@ -120,18 +126,55 @@ public class BarcodeDialog extends DialogFragment {
             public void release() {
             }
 
-
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
                 if (barcodes.size() > 0) {
                     barCodeData = barcodes.valueAt(0).displayValue;
-
                     dismiss();
                 }
             }
         });
+    }
+
+    public void OnOffFlashLight() {
+        if (getActivity().getPackageManager().hasSystemFeature(
+                PackageManager.FEATURE_CAMERA_FLASH)) {
+            Camera _cam = getCamera(cameraSource);
+            if (_cam != null) {
+                Camera.Parameters _pareMeters = _cam.getParameters();
+
+                if (_pareMeters.getFlashMode() == Camera.Parameters.FLASH_MODE_TORCH) {
+                    _pareMeters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+                } else {
+                    _pareMeters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+                }
+
+                _cam.setParameters(_pareMeters);
+            }
+        }
+    }
+
+    public static Camera getCamera(CameraSource cameraSource) {
+        Field[] declaredFields = CameraSource.class.getDeclaredFields();
+
+        for (Field field : declaredFields) {
+            if (field.getType() == Camera.class) {
+                field.setAccessible(true);
+                try {
+                    Camera camera = (Camera) field.get(cameraSource);
+                    if (camera != null) {
+                        return camera;
+                    }
+                    return null;
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+        }
+        return null;
     }
 
     @Override

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -66,13 +67,13 @@ public class BarcodeDialog extends DialogFragment {
     private void initQR() {
         // creo el detector qr
         BarcodeDetector barcodeDetector =
-                new BarcodeDetector.Builder(getContext())
-                        .setBarcodeFormats(Barcode.ALL_FORMATS)
+                new BarcodeDetector.Builder(getActivity())
+                        .setBarcodeFormats(Barcode.QR_CODE)
                         .build();
 
         // creo la camara
         cameraSource = new CameraSource
-                .Builder(getContext(), barcodeDetector)
+                .Builder(getActivity(), barcodeDetector)
                 .setRequestedPreviewSize(1600, 1024)
                 .setAutoFocusEnabled(true) //you should add this feature
                 .build();
@@ -83,7 +84,7 @@ public class BarcodeDialog extends DialogFragment {
             public void surfaceCreated(SurfaceHolder holder) {
 
                 // verifico si el usuario dio los permisos para la camara
-                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA)
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED) {
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -126,11 +127,19 @@ public class BarcodeDialog extends DialogFragment {
 
                 if (barcodes.size() > 0) {
                     barCodeData = barcodes.valueAt(0).displayValue;
-                    mScanListener.OnLeerBarCode(barCodeData);
+
                     dismiss();
                 }
             }
         });
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        if (barCodeData.length() > 0) {
+            mScanListener.OnLeerBarCode(barCodeData);
+        }
+        super.onDismiss(dialog);
     }
 
     @Override

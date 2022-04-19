@@ -150,6 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                         objEditor.putString("usuario", login.usuario.toUpperCase());
                         objEditor.putString("ultimo_usuario", login.usuario);
                         objEditor.putString("tipo_usuario", token.tipo_usuario);
+                        objEditor.putString("permite_conf_boleto",token.permite_conf_boleto);
                         objEditor.commit();
 
                         Intent frmMenu = new Intent(getApplicationContext(), MenuActivity.class);

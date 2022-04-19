@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.gaspersoft.businvoice.R;
 
+import java.util.Locale;
+
 public class MenuActivity extends AppCompatActivity {
 
     private TextView txtLogin;
@@ -23,12 +25,15 @@ public class MenuActivity extends AppCompatActivity {
     private Button btnExcesos;
     private Button btnVerificarBoleto;
     private String tipoUsuario;
+    private String confirmarBoleto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        //Por defecto no se permite confirmar boletos
+        confirmarBoleto = "";
         txtLogin = findViewById(R.id.txtLogin);
         btnCerrarSesion = findViewById(R.id.btnCesarSesion);
         btnEmitirBoletosProgramacion = findViewById(R.id.btnEmitirBoletosProgramacion);
@@ -41,6 +46,11 @@ public class MenuActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("config", Context.MODE_PRIVATE);
         String nombreUsuario = preferences.getString("usuario", "");
         tipoUsuario = preferences.getString("tipo_usuario","");
+        confirmarBoleto = preferences.getString("permite_conf_boleto","");
+
+        if(!"s".equals(confirmarBoleto.toLowerCase(Locale.ROOT))) {
+            btnVerificarBoleto.setVisibility(View.GONE);
+        }
 
         if (!"".equals(nombreUsuario)) {
             txtLogin.setText(nombreUsuario);

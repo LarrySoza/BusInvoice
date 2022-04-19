@@ -11,4 +11,8 @@ public class TokenDto {
     @SerializedName("tipo_usuario")
     @Expose
     public String tipo_usuario;
+
+    @SerializedName("permite_conf_boleto")
+    @Expose
+    public String permite_conf_boleto;
 }

@@ -116,7 +116,6 @@ public class VerificarBoletoActivity extends AppCompatActivity implements Barcod
         InfoBoletoDialog frmInfoBoleto = new InfoBoletoDialog(body);
         frmInfoBoleto.show(this.getSupportFragmentManager(), "Info");
         waitControl.setVisibility(View.GONE);
-        btnConfirmaBoleto.setEnabled(true);
     }
 
     private String GetHeaderToken() {
@@ -178,10 +177,11 @@ public class VerificarBoletoActivity extends AppCompatActivity implements Barcod
     }
 
     @Override
-    public void OnCerrar() {
+    public void OnCerrarInfo() {
         txtSerieBoleto.setText("");
         txtNumeroBoleto.setText("");
         txtSerieBoleto.setError(null);
         txtNumeroBoleto.setError(null);
+        btnConfirmaBoleto.setEnabled(true);
     }
 }

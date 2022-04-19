@@ -3,6 +3,7 @@ package com.gaspersoft.businvoice.dialogos;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,7 +36,7 @@ public class InfoBoletoDialog extends DialogFragment {
     private Button btnAceptar;
 
     public interface OnCerrarListener {
-        void OnCerrar();
+        void OnCerrarInfo();
     }
 
     private OnCerrarListener mCerrarListener;
@@ -74,7 +75,6 @@ public class InfoBoletoDialog extends DialogFragment {
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCerrarListener.OnCerrar();
                 dismiss();
             }
         });
@@ -114,6 +114,12 @@ public class InfoBoletoDialog extends DialogFragment {
             lblInfoSupervisor.setVisibility(View.GONE);
             lblFechaSupervisor.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        mCerrarListener.OnCerrarInfo();
+        super.onDismiss(dialog);
     }
 
     @Override

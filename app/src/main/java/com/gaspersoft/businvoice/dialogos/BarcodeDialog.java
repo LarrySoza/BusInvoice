@@ -6,6 +6,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.gaspersoft.businvoice.R;
 import com.google.android.gms.vision.CameraSource;
@@ -38,6 +41,7 @@ public class BarcodeDialog extends DialogFragment {
     private SurfaceView cameraView;
     private final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     private String barCodeData = "";
+    private ImageView btnLuz;
 
     public BarcodeDialog() {
     }
@@ -62,6 +66,15 @@ public class BarcodeDialog extends DialogFragment {
         v = inflater.inflate(R.layout.activity_barcode, null);
 
         cameraView = v.findViewById(R.id.camera_view);
+        btnLuz = v.findViewById(R.id.btnLuz);
+
+        btnLuz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OnOffFlashLight();
+            }
+        });
+
         initQR();
 
         builder.setView(v);
@@ -105,7 +118,7 @@ public class BarcodeDialog extends DialogFragment {
                 } else {
                     try {
                         cameraSource.start(cameraView.getHolder());
-                        OnOffFlashLight();
+                        //OnOffFlashLight();
                     } catch (IOException ie) {
                         Log.e("CAMERA SOURCE", ie.getMessage());
                     }
@@ -145,13 +158,18 @@ public class BarcodeDialog extends DialogFragment {
             Camera _cam = getCamera(cameraSource);
             if (_cam != null) {
                 Camera.Parameters _pareMeters = _cam.getParameters();
+                Bitmap img = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.luz_off);
 
-                if (_pareMeters.getFlashMode() == Camera.Parameters.FLASH_MODE_TORCH) {
+                String mode =_pareMeters.getFlashMode();
+
+                if (mode.equals(Camera.Parameters.FLASH_MODE_TORCH)) {
                     _pareMeters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
                 } else {
+                    img = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.luz_on);
                     _pareMeters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
                 }
 
+                btnLuz.setImageBitmap(img);
                 _cam.setParameters(_pareMeters);
             }
         }

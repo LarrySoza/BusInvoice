@@ -6,10 +6,11 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,6 +20,22 @@
             android:id="@+id/camera_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|center"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="411dp">
+
+        <ImageView
+            android:id="@+id/btnLuz"
+            android:layout_width="62dp"
+            android:layout_height="95dp"
+            android:layout_marginTop="16dp"
+            app:srcCompat="@drawable/luz_off" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

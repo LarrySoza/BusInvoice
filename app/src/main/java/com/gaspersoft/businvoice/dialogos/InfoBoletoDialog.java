@@ -93,8 +93,6 @@ public class InfoBoletoDialog extends DialogFragment {
         txtInfoSupervisor.setText(infoPasaje.supervisor);
         txtFechaSupervisor.setText(infoPasaje.fechaConfirmacion);
         lblNumeroBoleto.setText(infoPasaje.cpeNumeroDocumento);
-        txtInfoSupervisor.setText(infoPasaje.supervisor);
-        txtFechaSupervisor.setText(infoPasaje.fechaConfirmacion);
         txtInfoBusBoleto.setText(infoPasaje.bus);
 
         if (txtInfoSupervisor.getText().length() > 0) {

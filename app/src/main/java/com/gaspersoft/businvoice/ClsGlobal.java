@@ -28,7 +28,7 @@ public class ClsGlobal extends Application {
         if (instabus.equals("")) {
             return "https://viaunooapi.gaspersoft.com";
         } else {
-            return "https://instabusapi.gaspersoft.com";
+            return "https://instabusapiv2.gaspersoft.com";
         }
     }
 
